@@ -1,3 +1,7 @@
+sudo pip install plaid-python
+
+
+
 # A basic Flask quickstart 
 *With support for serving easy APIs and static content*
 
