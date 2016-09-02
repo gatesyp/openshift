@@ -10,14 +10,14 @@
 #
 # response = client.connect('chase', {
 #         'username': 'rratcliffe57',
-#         'password': 'ROOS'
+#         'password': p
 # })
 #
 #
 #
 # response = client.auth('chase', {
 #         'username': 'rratcliffe57',
-#         'password': 'ROOS'
+#         'password': p
 # })
 # print response
 #
@@ -45,12 +45,12 @@
 
 
 # client = Client(client_id='7c6e5f766710877408d0a4b', secret='349711490014d9fac30f99cc7bd1e0')
-# account_type = 'chase'
+account_type = 'chase'
 
 # try:
 #     response = client.connect(account_type, {
 #      'username': 'rratcliffe57',
-#      'password': 'ROOS'
+#      'password': p
 #     })
 #     print "try"
 # except plaid_errors.PlaidError:
@@ -59,7 +59,7 @@
 #     print "hello"
 #     connect_data = response.json()
 
-
+from passy import p
 from plaid import Client
 from plaid import errors as plaid_errors
 from plaid.utils import json
@@ -93,16 +93,26 @@ def answer_question(questions):
 
 
 def answer_list(devices):
-	print "answer_list"
-	print devices[1]
+    print "answer_list"
+    print devices[1]
 	# You should specify the device to which the passcode is sent.
 	# The available devices are present in the devices list
-	dog= client.connect_step('chase', None, options={
+    dog= client.connect_step('chase', None, options={
 	    'send_method': {'mask': 'xxx-xxx-9793'}
-	})
-	print dog
-	print dog.content
-	return dog
+        })
+    answer = raw_input("Please enter something: ")
+    cat=client.connect_step(account_type, answer)
+    print cat
+    print cat.content
+
+    # print dog
+    # print type(dog)
+    # new =dog.content
+    # print new
+    # print type(new)
+    # token=new.access_token
+    # print token
+    return dog
 
 
 def answer_selections(selections):
@@ -123,14 +133,23 @@ account_type = 'chase'
 try:
     response = client.connect(account_type, {
      'username': 'rratcliffe57',
-     'password': 'ROOS'
+     'password': p
     })
 except plaid_errors.PlaidError, e:
 	print "hi"
 	print e
 else:
     if response.status_code == 200:
-    	print "hi"
+    	print "his"
+        #print response.content
+        print type(response)
+        print type (response.content)
+        d = json.loads(response.content)
+        #print d
+        print type(d)
+        for items in d['name']:
+            print "hi"
+        #print type (response.content.)
         # User connected
         data = response.json()
     elif response.status_code == 201:
@@ -144,18 +163,18 @@ else:
         	print "@@@@@@@@@@@@@@@@@@"
             # check for 200 vs 201 responses
             # 201 indicates that additional MFA steps required
-my_answer = raw_input("Please enter something: ")
-print "you entered", my_answer
-response = client.auth('chase', {
-    'username': 'rratcliffe57',
-    'password': 'ROOS',
-    'code-based' : my_answer
-})
-print response
+#my_answer = raw_input("Please enter something: ")
+#print "you entered", my_answer
+# response = client.connect_step('chase', {
+#     'username': 'rratcliffe57',
+#     'password': p
+# })
+# print response
+
+# client = Client(client_id='57c6e5f766710877408d0a4b', secret='349711490014d9fac30f99cc7bd1e0', access_token = token)
+#
+# response = client.balance()
+# print response.content
+# print response
 # mfa_response = client.auth_step('chase', my_answer)
 # print mfa_response
-
-
-
-
- 
