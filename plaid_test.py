@@ -2,20 +2,10 @@ from passy import p
 from plaid import Client
 from plaid import errors as plaid_errors
 from plaid.utils import json
-import MySQLdb
+
 account_type = 'chase'
 
-# db=MySQLdb.connect(host="localhost",user="root",passwd="",db="openshift")
-# # you must create a Cursor object. It will let
-# #  you execute all the queries you need
-# cur = db.cursor()
 
-# # Use all the SQL you like
-# cur.execute("SELECT * FROM users")
-
-# # print all the first cell of all the rows
-# for row in cur.fetchall():
-#     print row[0]
 
 
 Client.config({
@@ -136,4 +126,4 @@ else:
         	print "@@@@@@@@@@@@@@@@@@"
             # check for 200 vs 201 responses
             # 201 indicates that additional MFA steps required
-db.close()
+# db.close()
