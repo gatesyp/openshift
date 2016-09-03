@@ -1,68 +1,22 @@
-# from plaid import Client
-# from plaid import errors as plaid_errors
-#
-#
-# Client.config({
-#     'url': 'https://tartan.plaid.com'
-# })
-#
-# client = Client(client_id='57c6e5f766710877408d0a4b', secret='349711490014d9fac30f99cc7bd1e0')
-#
-# response = client.connect('chase', {
-#         'username': 'rratcliffe57',
-#         'password': p
-# })
-#
-#
-#
-# response = client.auth('chase', {
-#         'username': 'rratcliffe57',
-#         'password': p
-# })
-# print response
-#
-#
-# # from plaid import Client
-# # from plaid import errors as plaid_errors
-# # from plaid.utils import json
-# #
-# #
-# # client = Client(client_id='57c6e5f766710877408d0a4b', secret='349711490014d9fac30f99cc7bd1e0')
-# # institutions = client.institutions().json()
-# # categories = client.categories().json()
-#
-#
-# accounts = client.auth_get().json()
-# print accounts
-#
-# # client = Client(client_id='57c6e5f766710877408d0a4b', secret='349711490014d9fac30f99cc7bd1e0', access_token='usertoken')
-# # response = client.balance()
-# # print response
-
-# from plaid import Client
-# from plaid import errors as plaid_errors
-# from plaid.utils import json
-
-
-# client = Client(client_id='7c6e5f766710877408d0a4b', secret='349711490014d9fac30f99cc7bd1e0')
-account_type = 'chase'
-
-# try:
-#     response = client.connect(account_type, {
-#      'username': 'rratcliffe57',
-#      'password': p
-#     })
-#     print "try"
-# except plaid_errors.PlaidError:
-#      print "wow"
-# else:
-#     print "hello"
-#     connect_data = response.json()
-
 from passy import p
 from plaid import Client
 from plaid import errors as plaid_errors
 from plaid.utils import json
+import MySQLdb
+account_type = 'chase'
+
+# db=MySQLdb.connect(host="localhost",user="root",passwd="",db="openshift")
+# # you must create a Cursor object. It will let
+# #  you execute all the queries you need
+# cur = db.cursor()
+
+# # Use all the SQL you like
+# cur.execute("SELECT * FROM users")
+
+# # print all the first cell of all the rows
+# for row in cur.fetchall():
+#     print row[0]
+
 
 Client.config({
     'url': 'https://tartan.plaid.com'
@@ -147,8 +101,27 @@ else:
         d = json.loads(response.content)
         #print d
         print type(d)
-        for items in d['name']:
-            print "hi"
+       # print response.content
+        for items in d['transactions']:
+
+            #TODO SQL DATABSE TO KEEP TRACK OF LVL FAST FOOD -200 restraunt -100
+
+           # print items['date']
+            try:
+                for things in items['category']:
+                    fast_food=False
+                    if things=="Fast Food": #finds if user bought fast food
+                        fast_food=True
+                       #print items['name']
+                if fast_food==False:
+                     for things in items['category']:
+                        if things=="Restaurants":
+                            print things
+                            print items['name']#finds name of restraunt that is not fast food
+
+            except:
+                pass
+            #print items
         #print type (response.content.)
         # User connected
         data = response.json()
@@ -163,18 +136,4 @@ else:
         	print "@@@@@@@@@@@@@@@@@@"
             # check for 200 vs 201 responses
             # 201 indicates that additional MFA steps required
-#my_answer = raw_input("Please enter something: ")
-#print "you entered", my_answer
-# response = client.connect_step('chase', {
-#     'username': 'rratcliffe57',
-#     'password': p
-# })
-# print response
-
-# client = Client(client_id='57c6e5f766710877408d0a4b', secret='349711490014d9fac30f99cc7bd1e0', access_token = token)
-#
-# response = client.balance()
-# print response.content
-# print response
-# mfa_response = client.auth_step('chase', my_answer)
-# print mfa_response
+db.close()
