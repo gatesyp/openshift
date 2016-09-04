@@ -36,7 +36,7 @@ def test():
 @app.route("/add/<username>")
 def add(username):
 
-	cur.execute("INSERT INTO users VALUES (2, %s,5000);" ,[username])
+	# cur.execute("INSERT INTO users VALUES (2, %s,5000);" ,[username])
 	
 	# cur.execute("select 1 from users where Username = %s;" , "hello")
 	return username
