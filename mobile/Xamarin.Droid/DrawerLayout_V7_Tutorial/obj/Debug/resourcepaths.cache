@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Paths>
+  <AdditionalAndroidResourcePaths>
+    <AdditionalAndroidResourcePath>C:\Users\gatesyp\AppData\Local\Xamarin\Xamarin.Android.Support.v4\21.0.3\embedded</AdditionalAndroidResourcePath>
+    <AdditionalAndroidResourcePath>C:\Users\gatesyp\AppData\Local\Xamarin\Xamarin.Android.Support.v7.AppCompat\21.0.3\embedded</AdditionalAndroidResourcePath>
+  </AdditionalAndroidResourcePaths>
+  <AdditionalJavaLibraryReferences>
+    <AdditionalJavaLibraryReference>C:\Users\gatesyp\AppData\Local\Xamarin\Xamarin.Android.Support.v4\21.0.3\embedded\classes.jar</AdditionalJavaLibraryReference>
+    <AdditionalJavaLibraryReference>C:\Users\gatesyp\AppData\Local\Xamarin\Xamarin.Android.Support.v4\21.0.3\embedded\libs\internal_impl-21.0.3.jar</AdditionalJavaLibraryReference>
+    <AdditionalJavaLibraryReference>C:\Users\gatesyp\AppData\Local\Xamarin\Xamarin.Android.Support.v7.AppCompat\21.0.3\embedded\classes.jar</AdditionalJavaLibraryReference>
+  </AdditionalJavaLibraryReferences>
+  <AdditionalNativeLibraryReferences />
+</Paths>
