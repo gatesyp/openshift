@@ -1,6 +1,6 @@
 import sys, ConfigParser, numpy
 import MySQLdb as mdb
-
+from plaid.utils import json
 
 class SQLConnection:
     """Used to connect to a SQL database and send queries to it"""
@@ -80,12 +80,25 @@ class SQLConnection:
 
     def get_new_transactions(self):
         pass
-    def first_time_plaid(self):
-        pass
-        
+    def first_time_plaid(self,username,id):
+        self.query("UPDATE `users` SET `access_id` = %s WHERE `users`.`user_name` = %s",[id,username])
+        return "done"
+
+    def get_plaid_token(self,username):
+        #result=self.query("SELECT access_id FROM `users` WHERE `user_name` LIKE 'rwr21'")
+       # result= self.query("SELECT access_id FROM `users` WHERE `user_name` LIKE %s",[username])
+       # print type(result)
+       dog= self.cur.execute("SELECT access_id FROM `users` WHERE `user_name` LIKE %s",[username]) #works for now?
+       tup=self.cur.fetchall()#get it to work!
+       dict((y)for y in tup)
+       # tup=str(tup)
+       # print tup
+       # d=json.loads(tup)
+       # print d["access_id"]
         
 
         
 #dog=SQLConnection().check_or_add("ajs262","average_pup")
 #print dog
-print SQLConnection().get_new_transactions()
+#print SQLConnection().get_new_transactions()
+SQLConnection().get_plaid_token("rwr21")
