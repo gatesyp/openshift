@@ -71,14 +71,21 @@ def answer_selections(selections):
 	return client.connect_step(account_type, answer)
 
 
-client = Client(client_id='57c6e5f766710877408d0a4b', secret='349711490014d9fac30f99cc7bd1e0')
+client = Client(client_id='57cccae6cfbf49f67b01fd5a', secret='2c13981884395fc691fda11148ed67')
 account_type = 'chase'
+token="6f8a988ad37d4a11503c6b3bc7192b7bc02a7356dde915a8a3ccb22c4e598f1906d97117d0c30fa2730679fcd50252213b7ec19bf80a92d0d684b0d2f4937ecf782ddabf43bc3bfcb684c5e4368c00b7"
 
 try:
-    response = client.connect(account_type, {
-     'username': 'rratcliffe57',
-     'password': p
-    })
+    # response = client.connect(account_type, {
+    #  'username': 'rratcliffe57',
+    #  'password': p
+    # })
+    # d=json.loads(response.content)
+
+    # print d["access_token"]
+
+    
+
 except plaid_errors.PlaidError, e:
 	print "hi"
 	print e
