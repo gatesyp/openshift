@@ -70,67 +70,72 @@ def answer_selections(selections):
 	answer = json.dumps(['Yes', 'No'])
 	return client.connect_step(account_type, answer)
 
-
-client = Client(client_id='57cccae6cfbf49f67b01fd5a', secret='2c13981884395fc691fda11148ed67')
-account_type = 'chase'
 token="6f8a988ad37d4a11503c6b3bc7192b7bc02a7356dde915a8a3ccb22c4e598f1906d97117d0c30fa2730679fcd50252213b7ec19bf80a92d0d684b0d2f4937ecf782ddabf43bc3bfcb684c5e4368c00b7"
+client = Client(client_id='57cccae6cfbf49f67b01fd5a', secret='2c13981884395fc691fda11148ed67', access_token=token)
+account_type = 'chase'
 
-try:
-    # response = client.connect(account_type, {
-    #  'username': 'rratcliffe57',
-    #  'password': p
-    # })
-    # d=json.loads(response.content)
 
-    # print d["access_token"]
+response=client.connect_get(token)
+print response.content
 
-    
+# try:
+#     pass
+   
+#     # response = client.connect(account_type, {
+#     #  'username': 'rratcliffe57',
+#     #  'password': p
+#     # })
+#     # d=json.loads(response.content)
 
-except plaid_errors.PlaidError, e:
-	print "hi"
-	print e
-else:
-    if response.status_code == 200:
-    	print "his"
-        #print response.content
-        print type(response)
-        print type (response.content)
-        d = json.loads(response.content)
-        #print d
-        print type(d)
-       # print response.content
-        for items in d['transactions']:
+#     # print d["access_token"]
 
-            #TODO SQL DATABSE TO KEEP TRACK OF LVL FAST FOOD -200 restraunt -100
 
-           # print items['date']
-            try:
-                for things in items['category']:
-                    fast_food=False
-                    if things=="Fast Food": #finds if user bought fast food
-                        fast_food=True
-                       #print items['name']
-                if fast_food==False:
-                     for things in items['category']:
-                        if things=="Restaurants":
-                            print things
-                            print items['name']#finds name of restraunt that is not fast food
 
-            except:
-                pass
-            #print items
-        #print type (response.content.)
-        # User connected
-        data = response.json()
-    elif response.status_code == 201:
-    	print "yo"
-        # MFA required
-        try:
-            mfa_response = answer_mfa(response.json())
-        except plaid_errors.PlaidError, e:
-       		print e
-        else:
-        	print "@@@@@@@@@@@@@@@@@@"
-            # check for 200 vs 201 responses
-            # 201 indicates that additional MFA steps required
-# db.close()
+# except plaid_errors.PlaidError, e:
+# 	print "hi"
+# 	print e
+# else:
+#     if response.status_code == 200:
+#     	print "his"
+#         #print response.content
+#         print type(response)
+#         print type (response.content)
+#         d = json.loads(response.content)
+#         #print d
+#         print type(d)
+#        # print response.content
+#         for items in d['transactions']:
+
+#             #TODO SQL DATABSE TO KEEP TRACK OF LVL FAST FOOD -200 restraunt -100
+
+#            # print items['date']
+#             try:
+#                 for things in items['category']:
+#                     fast_food=False
+#                     if things=="Fast Food": #finds if user bought fast food
+#                         fast_food=True
+#                        #print items['name']
+#                 if fast_food==False:
+#                      for things in items['category']:
+#                         if things=="Restaurants":
+#                             print things
+#                             print items['name']#finds name of restraunt that is not fast food
+
+#             except:
+#                 pass
+#             #print items
+#         #print type (response.content.)
+#         # User connected
+#         data = response.json()
+#     elif response.status_code == 201:
+#     	print "yo"
+#         # MFA required
+#         try:
+#             mfa_response = answer_mfa(response.json())
+#         except plaid_errors.PlaidError, e:
+#        		print e
+#         else:
+#         	print "@@@@@@@@@@@@@@@@@@"
+#             # check for 200 vs 201 responses
+#             # 201 indicates that additional MFA steps required
+# # db.close()
