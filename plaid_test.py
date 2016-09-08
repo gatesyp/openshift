@@ -12,6 +12,7 @@ class plaid():
     name=''
     password=''
     client=Client(client_id='57cccae6cfbf49f67b01fd5a', secret='2c13981884395fc691fda11148ed67')
+    plaid_results=''
     def __init__(self):
         print "created plaid object"
     Client.config({
@@ -76,10 +77,13 @@ class plaid():
     	answer = json.dumps(['Yes', 'No'])
     	return client.connect_step(account_type, answer)
 
-    def use_token(self,token):
+    def use_token(self,username):
+        obj=SQLConnection()
+        token=obj.get_plaid_token(username)
         self.client = Client(client_id='57cccae6cfbf49f67b01fd5a', secret='2c13981884395fc691fda11148ed67', access_token=token)
-        response=client.connect_get(token)
-        print response.content
+        response=self.client.connect_get(token)
+        self.plaid_results=response.content
+        return response.content
 
 
 
@@ -123,7 +127,73 @@ class plaid():
                 # check for 200 vs 201 responses
                 # 201 indicates that additional MFA steps required
     # db.close()
+    def get_list_of_restraunt_transactions(self,username): #gets all of the restraunts you have viited from plaid in list form
+        restraunt_ids_from_plaid=[]
+        data=self.use_token(username)
+        data=json.loads(data)
+        for items in data['transactions']:
+            add=False
+            try:
+                for things in items["category"]:
+                    if things=="Fast Food" or things =="Restaurants":
+                        add=True
+            except:
+                pass
+            if add==True:
+                restraunt_ids_from_plaid.append(items['_id'])
 
+        return restraunt_ids_from_plaid
+
+    def first_time_plaid_transactions(self,username):
+        obj=SQLConnection()
+        id=obj.find_id_of_user(username)
+        data=self.use_token(username)
+        data=json.loads(data)
+        for items in data['transactions']:
+            add=False
+            try:
+                for things in items["category"]:
+                    if things=="Fast Food" or things =="Restaurants":
+                        add=True
+            except:
+                pass
+            
+            if add==True:
+                obj.add_plaid_transactions_in_db(id,items["_id"])#adds the transaction id of any restraunts/fast_food 
+            
+    def check_plaid_event(self,username):#checks the database ids and plaid ids for differences
+        plaid_list=self.get_list_of_restraunt_transactions(username)
+        obj=SQLConnection()
+        user_id=obj.find_id_of_user(username)
+        database_list=obj.get_users_transactions(username)
+        test=list(set(plaid_list)-set(database_list))
+        if test!=[]: #if there is a difference aka update 
+            data=self.plaid_results
+            data=json.loads(data)
+            for items in test:
+                for things in data['transactions']:
+                    if things['_id']==items:
+                        fast_food=False
+                        for classifications in things["category"]:
+                            if classifications=="Fast Food":
+                                fast_food=True
+                        if fast_food==True:
+                            obj.check_transactions(user_id,"1")
+                            obj.add_plaid_transactions_in_db(user_id,things['_id'])
+                            obj.change_xp(username,-500)
+                        else:
+                            obj.check_transactions(user_id,"2")
+                            obj.add_plaid_transactions_in_db(user_id,things['_id'])
+                            obj.change_xp(username,-250)
+        return "done"
+
+
+
+                    
+
+
+
+plaid().check_plaid_event("rwr21")
 
     # print type(response)
     #             print type (response.content)
@@ -155,5 +225,8 @@ class plaid():
     #             # User connected
     #             data = response.json()
     #             
+#rint SQLConnection().get_users_transactions("rwr21")
+#plaid().first_time_plaid_transactions("rwr21")
 
-plaid().create_user("rwr21","chase","rratcliffe57",p)
+#print plaid().use_token("rwr21")
+#plaid().create_user("rwr21","chase","rratcliffe57",p)
