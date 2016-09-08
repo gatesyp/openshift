@@ -92,7 +92,7 @@ def GetNewAccessToken(RefToken):
     NewAccessToken = str(ResponseJSON['access_token'])
     NewRefreshToken = str(ResponseJSON['refresh_token'])
     #Write the access token to the ini file
-    WriteConfig(NewAccessToken,NewRefreshToken)
+    WriteConfig(NewAccessToken,NewRefreshToken) #HERE YOU GO ROOS LOOK HERE BUDDY LOOK LOOK LOOK ################)
 
     print "New access token output >>> " + FullResponse
   except urllib2.URLError as e:
@@ -123,8 +123,6 @@ def MakeAPICall(InURL,AccToken,RefToken):
   #Catch errors, e.g. A 401 error that signifies the need for a new access token
   except urllib2.URLError as e:
     print "Got this HTTP error: " + str(e.code)
-    print type(e.code)
-    print e.code
     HTTPErrorMessage = e.read()
     print "This was in the HTTP error message: " + HTTPErrorMessage
     #See what the error was
