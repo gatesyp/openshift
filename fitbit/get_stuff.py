@@ -7,7 +7,7 @@ import os
 
 #This is the Fitbit URL to use for the API call
 FitbitURL = "https://api.fitbit.com/1/user/-/profile.json"
-FitbitActivityURL = "https://api.fitbit.com/1/user/-/activities/date/2014-07-11.json"
+FitbitActivityURL = "https://api.fitbit.com/1/user/-/activities/date/2016-09-03.json"
 FitbitSleepURL = "https://api.fitbit.com/1/user/-/sleep/date/2014-07-11.json"
 
 #Use this URL to refresh the access token
@@ -92,7 +92,7 @@ def GetNewAccessToken(RefToken):
     NewAccessToken = str(ResponseJSON['access_token'])
     NewRefreshToken = str(ResponseJSON['refresh_token'])
     #Write the access token to the ini file
-    WriteConfig(NewAccessToken,NewRefreshToken)
+    WriteConfig(NewAccessToken,NewRefreshToken) #HERE YOU GO ROOS LOOK HERE BUDDY LOOK LOOK LOOK ################)
 
     print "New access token output >>> " + FullResponse
   except urllib2.URLError as e:
@@ -126,7 +126,8 @@ def MakeAPICall(InURL,AccToken,RefToken):
     HTTPErrorMessage = e.read()
     print "This was in the HTTP error message: " + HTTPErrorMessage
     #See what the error was
-    if (e.code == 401) and (HTTPErrorMessage.find("Access token invalid or expired") > 0):
+    if (e.code == 401) and (HTTPErrorMessage.find("Access token expired") > 0):
+      print "e.code was 401!"
       GetNewAccessToken(RefToken)
       return False, TokenRefreshedOK
     #Return that this didn't work, allowing the calling function to handle it
