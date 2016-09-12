@@ -1,2 +1,0 @@
-android.app.Application
-DrawerLayout_V7_Tutorial.DrawerLayout_V7_Tutorial
