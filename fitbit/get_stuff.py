@@ -7,7 +7,7 @@ import os
 
 #This is the Fitbit URL to use for the API call
 FitbitURL = "https://api.fitbit.com/1/user/-/profile.json"
-FitbitActivityURL = "https://api.fitbit.com/1/user/-/activities/date/2016-09-03.json"
+FitbitActivityURL = "https://api.fitbit.com/1/user/-/activities/date/2016-08-07.json"
 FitbitSleepURL = "https://api.fitbit.com/1/user/-/sleep/date/2014-07-11.json"
 
 #Use this URL to refresh the access token
