@@ -164,11 +164,11 @@ class plaid():
                             if classifications=="Fast Food":
                                 fast_food=True
                         if fast_food==True:
-                            obj.check_transactions(user_id,"1")
+                            obj.add_event_list(user_id,"1")
                             obj.add_plaid_transactions_in_db(user_id,things['_id'])
                             obj.change_xp(username,-500)
                         else:
-                            obj.check_transactions(user_id,"2")
+                            obj.add_event_list(user_id,"2")
                             obj.add_plaid_transactions_in_db(user_id,things['_id'])
                             obj.change_xp(username,-250)
         return "done"
@@ -216,3 +216,4 @@ class plaid():
 
 #print plaid().use_token("rwr21")
 #plaid().create_user("rwr21","chase","rratcliffe57",p)
+#plaid().check_plaid_event("rwr21")

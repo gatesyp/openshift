@@ -1,4 +1,4 @@
-import sys, ConfigParser, numpy
+import sys, ConfigParser
 import MySQLdb as mdb
 from plaid.utils import json
 
@@ -57,7 +57,7 @@ class SQLConnection:
                 for query, sub_values in zip(sql_query, values):
                     self.cur.execute(query, sub_values)
                 #  commit all these queries
-                self.con.commit
+                self.con.commit()
             return self.cur.fetchall()
     def close(self):
         self.cur.close()
@@ -88,6 +88,11 @@ class SQLConnection:
         result=result[0]
         return result["id"] #users id from users table 
 
+    def find_pet_of_user(self, username):
+        result=self.query("SELECT pet_name FROM `users` WHERE `user_name` LIKE %s",[username])
+        result=result[0]
+        return result["pet_name"] #users id from users table 
+
 
     def add_plaid_transactions_in_db(self,user_id,transaction_id):
         self.query("INSERT INTO `transactions` (`id`, `user_id`, `transaction_id`) VALUES (NULL, %s, %s)",(user_id,transaction_id))
@@ -101,8 +106,8 @@ class SQLConnection:
             transaction_ids.append(items["transaction_id"])
         return transaction_ids
              
-    def check_transactions(self,user_id,event_id):
-        self.query("INSERT INTO `event_list` (`user_id`, `event_id`, `timestamp`) VALUES (%s, %s, CURRENT_TIMESTAMP)",(user_id,event_id))
+    def add_event_list(self,user_id,event_id):
+        self.query("INSERT INTO `event_list` (`id`,`user_id`, `event_id`, `timestamp`,`time_of_orig_event`) VALUES (NULL,%s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",(user_id,event_id))
     
     def get_events(self,username):
         return_array=[]
@@ -145,16 +150,50 @@ class SQLConnection:
          self.query("UPDATE `users` SET `fitbit_acc_token` = %s WHERE `users`.`user_name` = %s",[acc,username])
          self.query("UPDATE `users` SET `fitbit_ref_token` = %s WHERE `users`.`user_name` = %s",[ref,username])
 
-    def add_fitbit_events(self):
-        self.query("INSERT INTO `events` (`id`, `category`, `name`,`xp_change`,`message`,`type`) VALUES (NULL, %s, %s,%s,%s,%s)",(user_id,transaction_id))
 
     def add_friend(self,username,friend_username):
         user_id=self.find_id_of_user(username)
         friend_id=self.find_id_of_user(friend_username)
         self.query("INSERT INTO `friends` (`user_id`, `friend_id`) VALUES ( %s, %s)",(user_id,friend_id))
+        
+
+    def get_friends(self,username):
+        user_id=self.find_id_of_user(username)
+        friends=self.query("SELECT friend_id FROM `friends` WHERE `user_id` = %s",[user_id])
+        list_of_friends=[]
+        for items in friends:
+            temp= self.query("SELECT user_name FROM `users` WHERE `id` = %s",[items['friend_id']])
+            temp=temp[0]
+            list_of_friends.append(temp)
+        print list_of_friends
+        return list_of_friends
+
+    def insert_fitbit_events(self,username,category,pet_status,xp_change,message,type):
+        self.query("INSERT INTO `events` (`id`, `category`,`pet_status`,`xp_change`,`message`,`type`) VALUES ( NULL, %s,%s, %s,%s,%s)",(category,pet_status,xp_change,message,type))
+        temp= self.query("SELECT id FROM events ORDER BY id DESC LIMIT 0, 1")
+        temp=temp[0]
+        trans_id= temp['id']
+        user_id=self.find_id_of_user(username)
+        self.add_event_list(user_id,trans_id)
+
+    def get_all_users(self):
+        users=[]
+        temp= self.query("SELECT user_name FROM `users`")
+        for items in temp:
+            users.append(items['user_name'])
+
+        return users
 
 
-SQLConnection().add_friend("rwr21","emc67")
+SQLConnection().get_all_users()
+
+
+     
+
+
+#SQLConnection().add_friend("rwr21","ajs262")
+
+#SQLConnection().get_friends("rwr21")
 # print SQLConnection().get_fitbit_ref_token("rwr21")
 # d=SQLConnection()
 #dog=SQLConnection().check_or_add("ajs262","average_pup")

@@ -9,9 +9,10 @@ from sql import SQLConnection
 class fitbit():
   
   #This is the Fitbit URL to use for the API call
+  date=""
   FitbitURL = "https://api.fitbit.com/1/user/-/profile.json"
   FitbitActivityURL = "https://api.fitbit.com/1/user/-/activities/date/2016-08-25.json"
-  FitbitSleepURL = "https://api.fitbit.com/1/user/-/sleep/date/2014-07-11.json"
+  FitbitSleepURL = "https://api.fitbit.com/1/user/-/sleep/date/2016-07-11.json"
 
   #Use this URL to refresh the access token
   TokenURL = "https://api.fitbit.com/oauth2/token"
@@ -26,6 +27,9 @@ class fitbit():
   #Some contants defining API error handling responses
   TokenRefreshedOK = "Token refreshed OK"
   ErrorInAPI = "Error when making API call that I couldn't handle"
+
+  def set_date(self,date):
+    self.date=date
 
   #Get the config from the config file.  This is the access and refresh tokens
   def GetConfig(self,username):
@@ -141,7 +145,7 @@ class fitbit():
 
   #Main part of the code
   #Declare these global variables that we'll use for the access and refresh tokens
-  def get_user_data(self,username):
+  def get_user_data(self,username,type):
 
     AccessToken = ""
     RefreshToken = ""
@@ -152,7 +156,10 @@ class fitbit():
     AccessToken, RefreshToken = self.GetConfig(username)
 
     #Make the API call
-    APICallOK, APIResponse = self.MakeAPICall(self.FitbitActivityURL, AccessToken, RefreshToken,username)
+    if type=="fitness":
+      APICallOK, APIResponse = self.MakeAPICall(self.FitbitActivityURL, AccessToken, RefreshToken,username)
+    if type=="sleep":
+      APICallOK, APIResponse = self.MakeAPICall(self.FitbitSleepURL, AccessToken, RefreshToken,username)
 
     if APICallOK:
       parsed = json.loads(APIResponse)
@@ -165,15 +172,51 @@ class fitbit():
       else:
        print self.ErrorInAPI
 
-  def make_score(self,username):
-    result=self.get_user_data(username)
+  def make_score_fitness(self,username):
+    type="fitness"
+    result=self.get_user_data(username,type)
     steps= result['summary']['steps']
     highly_active_min=result['summary']['veryActiveMinutes']
     fairly_active_min=result['summary']['fairlyActiveMinutes']
     lightly_active_min=result['summary']['lightlyActiveMinutes']
     sed_min=result['summary']['sedentaryMinutes']
-    score = highly_active_min+(fairly_active_min*.5)+(lightly_active_min*.25)-(sed_min*.05)
-    print score*10
-    
+    score = highly_active_min+(fairly_active_min*.5)+(lightly_active_min*.25)-(sed_min*.05)  #calculate their score
+    score=score*10
+    return score
 
-fitbit().make_score("rwr21")
+
+  def add_events_fitness(self,username):
+
+    db=SQLConnection()
+    users=db.get_all_users()
+    for username in users:
+      petname=db.find_pet_of_user(username)
+      category="fitness"
+      xp_change=self.make_score_fitness(username)
+      type1=1
+
+      if xp_change<=-300:
+        message="You have seriously harmed " +petname + " from neglagence yesterday. Make it up to " + petname +" by exercising today"
+        pet_status="harmed_exercise"
+      elif xp_change<=100:
+        message= petname+" is sad from the lack of exercise yesterday"
+        pet_status="low_exercise"
+
+      elif xp_change<=300:
+        message=petname+" got some exercise yesterday, but is still eager to play today "
+        pet_status="avg_exercise"
+      else:
+        message=petname+" got plenty of exercise yesterday and as a result he is very happy!"
+        pet_status_="good_exercise"
+
+      db.insert_fitbit_events(username,category,pet_status,xp_change,message,type1)
+
+    def make_score_sleep(self,username):
+      type="sleep"
+      result=self.get_user_data(username,type)
+      print result
+
+
+fitbit("hi")
+
+#fitbit().make_score_sleep("rwr21")
