@@ -32,10 +32,25 @@ public class PageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_page, container, false);
-        TextView textView = (TextView) view;
-        textView.setText("Fragment #" + mPage);
-        return view;
+        if(mPage == 1) {
+            View view = inflater.inflate(R.layout.fragment_home, container, false);
+            return view;
+        }
+        if(mPage == 2) {
+            View view = inflater.inflate(R.layout.fragment_events, container, false);
+            return view;
+        }
+        if(mPage == 3) {
+            View view = inflater.inflate(R.layout.fragment_social, container, false);
+            return view;
+        }
+        else {
+            View view = inflater.inflate(R.layout.fragment_page, container, false);
+            TextView textView = (TextView) view;
+            textView.setText("Fragment #" + mPage);
+            return view;
+        }
+
     }
 
 }

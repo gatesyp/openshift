@@ -5,9 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-/**
- * Created by emerson on 9/15/16.
- */
 public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 3;
     private String tabTitles[] = new String[] { "Home", "Events", "Social" };
@@ -16,6 +13,8 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
     public SampleFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
+        System.out.println("HELLO THERE");
+        System.out.println(context);
     }
 
     @Override
