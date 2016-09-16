@@ -5,14 +5,22 @@ import sys
 import json
 import os
 from sql import SQLConnection
-
+import time
+from datetime import datetime, timedelta
 class fitbit():
   
   #This is the Fitbit URL to use for the API call
   date=""
+  d = datetime.today() - timedelta(days=1)
+  date= "%s-%s-%s" % (d.year,d.month,d.day)
+  
+  # date="2016-08-25"
+  
+  #date='2016-07-11'
   FitbitURL = "https://api.fitbit.com/1/user/-/profile.json"
-  FitbitActivityURL = "https://api.fitbit.com/1/user/-/activities/date/2016-08-25.json"
-  FitbitSleepURL = "https://api.fitbit.com/1/user/-/sleep/date/2016-07-11.json"
+  FitbitActivityURL = "https://api.fitbit.com/1/user/-/activities/date/"+date+".json"
+  FitbitSleepURL = "https://api.fitbit.com/1/user/-/sleep/date/"+date+".json"
+  
 
   #Use this URL to refresh the access token
   TokenURL = "https://api.fitbit.com/oauth2/token"
@@ -169,6 +177,7 @@ class fitbit():
     else:
       if (APIResponse == self.TokenRefreshedOK):
         print "Refreshed the access token.  Can go again"
+        self.get_user_data(username,type)#NEW MIGHT BREAK SOMETHING IDK
       else:
        print self.ErrorInAPI
 
@@ -176,6 +185,10 @@ class fitbit():
     type="fitness"
     result=self.get_user_data(username,type)
     steps= result['summary']['steps']
+    print steps
+    if steps<=500:
+      return None
+
     highly_active_min=result['summary']['veryActiveMinutes']
     fairly_active_min=result['summary']['fairlyActiveMinutes']
     lightly_active_min=result['summary']['lightlyActiveMinutes']
@@ -185,38 +198,62 @@ class fitbit():
     return score
 
 
-  def add_events_fitness(self,username):
+  def add_events_fitness(self):
 
     db=SQLConnection()
     users=db.get_all_users()
+    category="fitness"
     for username in users:
-      petname=db.find_pet_of_user(username)
-      category="fitness"
-      xp_change=self.make_score_fitness(username)
-      type1=1
+      if db.is_fitbit_setup(username):
+        pet_name=db.find_pet_of_user(username)
+        xp_change=self.make_score_fitness(username)
+        type1=1
+        wore_fitbit=True
+        if xp_change==None:
+          db.insert_events(username,category,"no_effect",0,"You did not sleep with your fitbit, so your score was uneffected",type1)
+          wore_fitbit=False
+          
+        if wore_fitbit:
+          if xp_change<=-300:
+            message="You have seriously harmed " +pet_name + " from neglagence yesterday. Make it up to " + pet_name +" by exercising today"
+            pet_status="harmed_exercise"
+          elif xp_change<=100:
+            message= pet_name+" is sad from the lack of exercise yesterday"
+            pet_status="low_exercise"
+          elif xp_change<=300:
+            message=pet_name+" got some exercise yesterday, but is still eager to play today "
+            pet_status="avg_exercise"
+          else:
+            message=pet_name+" got plenty of exercise yesterday and as a result he is very happy!"
+            pet_status="good_exercise"
+          print "added"
+          db.insert_events(username,category,pet_status,xp_change,message,type1)
 
-      if xp_change<=-300:
-        message="You have seriously harmed " +petname + " from neglagence yesterday. Make it up to " + petname +" by exercising today"
-        pet_status="harmed_exercise"
-      elif xp_change<=100:
-        message= petname+" is sad from the lack of exercise yesterday"
-        pet_status="low_exercise"
+  def make_score_sleep(self):
+    type="sleep"
+    db=SQLConnection()
+    users=db.get_all_users()
+    for username in users:
+      if db.is_fitbit_setup(username):
+        pet_name=db.find_pet_of_user(username)
+        result=self.get_user_data(username,type)
+        print result
+        result=result['summary']['totalTimeInBed']
+        print result
+        db=SQLConnection()
+        if result==0:
+          db.insert_events(username,"sleep","no_effect",0,"You did not sleep with your fitbit, so your score was uneffected","1")
+        elif result<=400:
+          db.insert_events(username,"sleep","sleepy",-250, pet_name +" is tired from the lack of sleep. -250 xp","1")
+        elif result<=420:
+           db.insert_events(username,"sleep","sleepy",-125, pet_name +" is tired from the lack of sleep. -250 xp","1")
+        else:
+          db.insert_events(username,"sleep","awake",250, pet_name +" feels great today! It must be from getting enough sleep. +250 xp","1")
 
-      elif xp_change<=300:
-        message=petname+" got some exercise yesterday, but is still eager to play today "
-        pet_status="avg_exercise"
-      else:
-        message=petname+" got plenty of exercise yesterday and as a result he is very happy!"
-        pet_status_="good_exercise"
 
-      db.insert_fitbit_events(username,category,pet_status,xp_change,message,type1)
+#fitbit().add_events_fitness()
 
-    def make_score_sleep(self,username):
-      type="sleep"
-      result=self.get_user_data(username,type)
-      print result
+fitbit().make_score_sleep()
 
 
-fitbit("hi")
-
-#fitbit().make_score_sleep("rwr21")
+#TODO FITBIT IT FAILS FIRST TIME WHEN IT NEEDS TO USE REFRESH TOKEN 
