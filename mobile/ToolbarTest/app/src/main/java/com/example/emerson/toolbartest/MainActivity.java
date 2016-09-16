@@ -46,12 +46,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        RecyclerView recList = (RecyclerView) findViewById(R.id.my_recycler_view);
-//        recList.setHasFixedSize(true);
-//
-//        LinearLayoutManager llm = new LinearLayoutManager(this);
-//        llm.setOrientation(LinearLayoutManager.VERTICAL);
-//        recList.setLayoutManager(llm);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -81,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
 //        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 //        tabLayout.setupWithViewPager(viewPager);
 //
+//        RecyclerView recList = (RecyclerView) findViewById(R.id.my_recycler_view);
+//        recList.setHasFixedSize(true);
+//
+//        LinearLayoutManager llm = new LinearLayoutManager(this);
+//        llm.setOrientation(LinearLayoutManager.VERTICAL);
+//        recList.setLayoutManager(llm);
 //        ContactAdapter ca = new ContactAdapter(createList(30));
 //        recList.setAdapter(ca);
 
