@@ -71,14 +71,16 @@ Parameters
 Example Response
 
 ```
-  [
-  {
-    "user_name": "emc67"
-  },
-  {
-    "user_name": "ajs262"
-  }
-]
+{
+  "friends": [
+    {
+      "user_name": "emc67"
+    },
+    {
+      "user_name": "ajs262"
+    }
+  ]
+}
 ``` 
 
 ##Events
