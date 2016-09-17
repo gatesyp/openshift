@@ -77,6 +77,30 @@ Example Response
 
 ##Events
 
+POST **/events/plaid**   
+
+Call this when opening app, it checks if any new plaid events happened since last refresh
+
+Parameters  
+
+```
+ {  
+    "user_name": "rwr21"  
+ }  
+```
+
+POST **/events/get_new**   
+
+Call this when opening plaid, it checks if any new plaid events happened since last refresh
+
+Parameters  
+
+```
+ {  
+    "user_name": "rwr21"  
+ }  
+```
+
 
 
 
