@@ -45,7 +45,7 @@ public class PageFragment extends Fragment {
             return view;
         }
         else {
-            View view = inflater.inflate(R.layout.fragment_page, container, false);
+            View view = inflater.inflate(R.layout.fragment_social, container, false);
             TextView textView = (TextView) view;
             textView.setText("Fragment #" + mPage);
             return view;
