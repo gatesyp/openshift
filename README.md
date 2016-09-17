@@ -71,15 +71,21 @@ Parameters
 Example Response
 
 ```
-   [{"user_name": "emc67"}, 
-    {"user_name": "ajs262"}]
+  [
+  {
+    "user_name": "emc67"
+  },
+  {
+    "user_name": "ajs262"
+  }
+]
 ``` 
 
 ##Events
 
 POST **/events/plaid**   
 
-Call this when opening app, it checks if any new plaid events happened since last refresh
+Check for new events with plaid ###Don't use this
 
 Parameters  
 
@@ -101,8 +107,30 @@ Parameters
  }  
 ```
 
+Example Response  if new event is found
+
+```
+{
+  "event_list": [
+    {
+      "message": "fluffy got plenty of exercise yesterday and as a result he is very happy!"
+    },
+    {
+      "message": "fluffy feels great today! It must be from getting enough sleep. +250 xp"
+    }
+  ],
+  "level": 1954
+}
+```
 
 
+Example Response if a new event is NOT found 
+```
+{
+  "event_list": null,
+  "level": 1954
+}
+```
 
 
 
