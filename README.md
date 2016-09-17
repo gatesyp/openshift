@@ -1,8 +1,10 @@
-# openshift
+# Openshift API
 
-##setup
+##Setup
 
-POST /setup/create_user
+POST /setup/create_user  
+
+Create a new user
 
 
 Parameters  
@@ -17,6 +19,9 @@ Parameters
 
 
 POST /setup/add_plaid  
+
+Setup plaid for the first time  
+
 Parameters  
 
 ```
@@ -38,6 +43,8 @@ POST /setup/add_plaid  #not finished waiting on emc67/ig11
 
 POST /friends/add
 
+Add a friend
+
 Parameters  
 
 
@@ -48,7 +55,9 @@ Parameters
   }  
 ```
 
-POST /friends/find
+POST /friends/find   
+
+Call this endpoint with a username, recieve all of that users friends as a list of key-values.
 
 Parameters  
 
@@ -65,6 +74,8 @@ Example Response
    [{"user_name": "emc67"}, 
     {"user_name": "ajs262"}]
 ``` 
+
+##Events
 
 
 
