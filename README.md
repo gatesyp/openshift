@@ -34,7 +34,8 @@ Parameters
 Example Response
 
 If password is correct   
-```True
+```
+True
 ```
 
 If password is incorrect   
