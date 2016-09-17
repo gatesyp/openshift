@@ -17,6 +17,30 @@ Parameters
   }  
 ```
 
+POST **/setup/login**  
+
+Login (only needs done if user did not just make an account) 
+
+
+Parameters  
+ 
+```
+ {
+    "user_name": "hi_im_steven",  
+    "pass_word": "emerson_lol_jk"  
+  }  
+ ```
+ 
+Example Response
+
+If password is correct   
+```True
+```
+
+If password is incorrect   
+```
+False
+```
 
 POST **/setup/add_plaid**  
 
