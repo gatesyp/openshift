@@ -22,21 +22,21 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    // Glide
+    // graphs
+    // specific plain pie chart
+    
+
+    compile 'com.android.support:recyclerview-v7:23.+'
+    compile 'com.android.support:cardview-v7:23.+'
+
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
-    // Glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    // graphs
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
-    // specific plain pie chart
     compile 'com.github.zurche:plain-pie:v0.1.1'
-
-    compile 'com.android.support:appcompat-v7:23.+'
-    compile 'com.android.support:recyclerview-v7:23.+'
-    compile 'com.android.support:design:23.+'
-    compile 'com.android.support:cardview-v7:23.+'
-    compile 'com.android.support:recyclerview-v7:23.+'
-    compile 'com.android.support:cardview-v7:23.+'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
-
+    compile 'com.android.support:support-v4:23.4.0'
 }

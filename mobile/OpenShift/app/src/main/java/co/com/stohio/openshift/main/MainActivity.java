@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
-        private String tabTitles[] = new String[] { "Home", "Events", "Social" };
+        private String tabTitles[] = new String[] { "Home", "Events", "Social", "Showcase" };
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -45,13 +45,14 @@ public class MainActivity extends AppCompatActivity {
                 case 0: return HomeFragment.newInstance("Home");
                 case 1: return EventsFragment.newInstance("Events");
                 case 2: return SocialFragment.newInstance("Social");
+                case 3: return DemoFragment.newInstance("Showcase");
                 default: return SocialFragment.newInstance("Default");
             }
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
         @Override
         public CharSequence getPageTitle(int position) {
@@ -60,21 +61,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    private List createList(int size) {
-//        List result = new ArrayList();
-//        for (int i=1; i <= size; i++) {
-//            ContactInfo ci = new ContactInfo();
-//            ci.name = ContactInfo.NAME_PREFIX + i;
-//            ci.surname = ContactInfo.SURNAME_PREFIX + i;
-//            ci.email = ContactInfo.EMAIL_PREFIX + i + "@test.com";
-//
-//            result.add(ci);
-//
-//        }
-//
-//        return result;
-//
-//    }
 
     // Menu icons are inflated just as they were with actionbar
     @Override
@@ -84,30 +70,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-//    static class Adapter extends FragmentPagerAdapter {
-//        private final List<Fragment> mFragments = new ArrayList<>();
-//        private final List<String> mFragmentTitles = new ArrayList<>();
-//
-//        public Adapter(FragmentManager fm) { super(fm); }
-//
-//        public void addFragment(Fragment fragment, String title) {
-//            mFragments.add(fragment);
-//            mFragmentTitles.add(title);
-//        }
-//
-//        @Override
-//        public Fragment getItem(int position) { return mFragments.get(position); }
-//
-//        @Override
-//        public int getCount() {
-//            return mFragments.size();
-//        }
-//
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            return mFragmentTitles.get(position);
-//        }
-//    }
 
 }
 

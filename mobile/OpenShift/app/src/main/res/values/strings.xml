@@ -5,10 +5,12 @@
     <string name="key_binding_default_toolbar_name">Modal-Toolbar-Title</string>
 
 
-
     <string name="BackDropBottomSheetBehavior">co.com.stohio.openshift.lib.BackdropBottomSheetBehavior</string>
     <string name="BottomSheetBehaviorGoogleMapsLike">co.com.stohio.openshift.lib.BottomSheetBehaviorGoogleMapsLike</string>
     <string name="ScrollAwareFABBehavior">co.com.stohio.openshift.lib.ScrollAwareFABBehavior</string>
     <string name="MergedAppBarLayoutBehavior">co.com.stohio.openshift.lib.MergedAppBarLayoutBehavior</string>
     <string name="ScrollingAppBarLayoutBehavior">co.com.stohio.openshift.lib.ScrollingAppBarLayoutBehavior</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
