@@ -16,15 +16,20 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Created by emerson on 9/16/16.
@@ -32,7 +37,9 @@ import java.util.Map;
 
 public class SocialFragment extends Fragment {
     private RecyclerView.Adapter adapter;
-    public static JSONObject returner = new JSONObject();
+    public static JSONObject capture_response = new JSONObject();
+    ArrayList results = new ArrayList<DataObject>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,18 +52,33 @@ public class SocialFragment extends Fragment {
 
         RecyclerView.LayoutManager llm = new LinearLayoutManager(getContext());
         rv .setLayoutManager(llm);
-        adapter = new MyRA(getDataSet());
+
+
+
+
+        ArrayList<DataObject> myVar = new ArrayList<DataObject>();
+        myVar = getDataSet(new VolleyCallback() {
+            @Override
+            public ArrayList<DataObject> onSuccess(String result) {
+                return results;
+            }
+        });
+
+        adapter = new MyRA(myVar);
+
+
+
         rv.setAdapter(adapter);
         return v;
     }
 
-    private ArrayList<DataObject> getDataSet() {
-        ArrayList results = new ArrayList<DataObject>();
+    private ArrayList<DataObject> getDataSet(final VolleyCallback callback) {
+//    private void getDataSet(final VolleyCallback callback) {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         String url = "http://f6cd1422.ngrok.io/friends/find";
 
-        String bogos = "ajddfsadfdsafskkjlsadflkjdsalk";
+        String bogos = "sksddfajddfsadfdsasdfasdffskkjlsadflkjdsalk";
 
         JSONObject returned = new JSONObject();
         JSONObject jo = new JSONObject();
@@ -66,22 +88,30 @@ public class SocialFragment extends Fragment {
             e.printStackTrace();
         }
 
-
         Log.d("Myactivity", "JSON posted to " + url + " is: " + jo.toString());
 
+        RequestFuture<JSONObject> future = RequestFuture.newFuture();
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, jo,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response) {
                         // Display the first 500 characters of the response string.
                         // create the model
-                        returner = response;
-
+                        capture_response = response;
+                        int l = capture_response.length();
+                        String lenght = Integer.toString(l);
+                        Log.d("MyActyivity", "Here is the length: " +lenght);
                         Log.d("MyActivity", "eeDONGER");
                         Log.d("MyActivity", response.toString());
-                    }
-                }, new Response.ErrorListener() {
 
+                        for (int index = 0; index < l; index++) {
+                            DataObject obj = new DataObject("Some Primary Text " + index, "Secondary " + index);
+                            results.add(index, obj);
+                        }
+                        callback.onSuccess("Test");
+                    }
+                },
+                new Response.ErrorListener() {//
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("MyActivity", "That didnt work! ");
@@ -89,20 +119,21 @@ public class SocialFragment extends Fragment {
         });
 
         queue.add(jsObjRequest);
-
-
-        int l = returner.length();
-
-
-        String lenght = Integer.toString(l);
-
-        Log.d("MyActyivity", "Here is the length: " +lenght);
-
-        for (int index = 0; index < l; index++) {
-            DataObject obj = new DataObject("Some Primary Text " + index, "Secondary " + index);
-            results.add(index, obj);
+//        capture_response = future.get(30, TimeUnit.SECONDS);
+        try {
+            JSONObject response =  future.get(10, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            // exception handling
+        } catch (ExecutionException e) {
+            // exception handling
+        } catch (TimeoutException e) {
+            // exception handling
         }
-        return results;
+        return ;
+    }
+
+    public interface VolleyCallback {
+      ArrayList<DataObject> onSuccess(String result);
     }
 
     public static SocialFragment newInstance(String text) {
@@ -113,31 +144,5 @@ public class SocialFragment extends Fragment {
         f.setArguments(b);
 
         return f;
-
     }
-
-//    private void getEvents(){
-//
-//        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-//        String url ="http://www.google.com";
-//
-//        // Request a string response from the provided URL.
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        // Display the first 500 characters of the response string.
-//                        // create the model
-//                        eventText.setText(response.substring(0,500));
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                String msg = "That didnt work! ";
-//                eventText.setText(msg);
-//            }
-//        });
-//        // Add the request to the RequestQueue.
-//        queue.add(stringRequest);
-//    }
 }
