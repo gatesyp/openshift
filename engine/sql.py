@@ -2,7 +2,8 @@ import sys, ConfigParser
 import MySQLdb as mdb
 from plaid.utils import json
 import math
-
+import uuid
+import hashlib
 class SQLConnection:
     """Used to connect to a SQL database and send queries to it"""
     config_file = 'db.cfg'
@@ -65,6 +66,22 @@ class SQLConnection:
 
     def add_event_list(self,user_id,event_id):
         self.query("INSERT INTO `event_list` (`id`,`user_id`, `event_id`, `timestamp`) VALUES (NULL,%s, %s, CURRENT_TIMESTAMP)",(user_id,event_id))
+
+
+    def hash_password(self,password):
+         # uuid is used to generate a random number
+        salt = uuid.uuid4().hex
+        return hashlib.sha256(salt.encode() + password.encode()).hexdigest() + ':' + salt
+    
+    def check_password(self,hashed_password, user_password):
+        password, salt = hashed_password.split(':')
+        return password == hashlib.sha256(salt.encode() + user_password.encode()).hexdigest()
+
+        
+    def get_hashed_pass(self,username):
+        print self.query("SELECT hashed_pass FROM `users` WHERE `user_name` LIKE %s",[username])[0]['hashed_pass']
+        return self.query("SELECT hashed_pass FROM `users` WHERE `user_name` LIKE %s",[username])[0]['hashed_pass']
+
    
 
     ###########END CALLED ONLY IN SQL FILE###########
@@ -73,33 +90,28 @@ class SQLConnection:
 
     #@@@@@@@@@@@@ START GENERAL METHODS @@@@@@@@@@@@@@#
 
-
-    def hash_password(password):
-         # uuid is used to generate a random number
-        salt = uuid.uuid4().hex
-        return hashlib.sha256(salt.encode() + password.encode()).hexdigest() + ':' + salt
-    
-    def check_password(hashed_password, user_password):
-        password, salt = hashed_password.split(':')
-        return password == hashlib.sha256(salt.encode() + user_password.encode()).hexdigest()
-
-    #def hash_pass():
-        
-
-
-
-
-
+    def get_last(self,username,number_of_events):
+        num=number_of_events
+        messages=[]
+        user_id=self.find_id_of_user(username)
+        for items in self.query("SELECT event_id FROM event_list WHERE `user_id` LIKE %s ORDER BY id DESC LIMIT 0, %s",[user_id,num]):
+            messages.append(self.query("SELECT message FROM events WHERE `id` LIKE %s",[items['event_id']])[0])            
+        print messages
+        return messages
 
 
     def check_or_add(self,user_name,pet_name,password): # tries to create an account, if one does not exist it creates it. 
         try:
             password=self.hash_password(password)
             self.query("INSERT INTO users VALUES (NULL,%s,%s,NULL,NULL,NULL,5000,NULL,NULL,CURRENT_TIMESTAMP,%s);" ,(user_name,pet_name,password))
-            print "Thank you for making an account!"
-            return "1"
+            return "Thank you for making an account!"
+            #return "1"
         except mdb.IntegrityError, e:
-            print "Welcome Back!"
+            return "Welcome Back!"
+
+    def login(self,username,password):
+        hashed_pass=self.get_hashed_pass(username)
+        return str(self.check_password(hashed_pass,password))
 
     def find_id_of_user(self, username):
         return self.query("SELECT id FROM `users` WHERE `user_name` LIKE %s",[username])[0]['id']# users id from id table as string
@@ -120,10 +132,10 @@ class SQLConnection:
         xp=self.get_xp(username)
         if xp<=5000:
             lvl=1
-            print lvl
+            return lvl
         else:
             lvl=math.floor((xp-5000)/(250))
-            print lvl 
+            return lvl 
         
 
     def add_friend(self,username,friend_username):
@@ -192,11 +204,18 @@ class SQLConnection:
                 event=self.query("SELECT message FROM `events` WHERE `id` = %s",[items["event_id"]]) #change message to * for full dict
                 event=event[0]
                 return_array.append(event)
-            print return_array
+            json_events={}
+            json_events["event_list"]=return_array
+            json_events["level"]=self.get_lvl(username)
+            return_array=(json_events)
             return return_array
             
         else:
             print return_array
+            return_array={}
+            return_array["event_list"]=None
+            return_array["level"]=self.get_lvl(username)
+            #return_array=json.dumps(return_array)
             return return_array
 #@@@@@@@@@@@@ END GENERAL METHODS @@@@@@@@@@@@@@#
 
@@ -285,10 +304,10 @@ class SQLConnection:
     
 
 
-SQLConnection().get_lvl("rwr21")
+#SQLConnection().get_lvl("rwr21")
 #SQLConnection().insert_events("rwr21","t","t",1,"t",1)
 
-
+SQLConnection().get_last("rwr21",5)
 
 
 

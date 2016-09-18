@@ -177,7 +177,14 @@ class fitbit():
     else:
       if (APIResponse == self.TokenRefreshedOK):
         print "Refreshed the access token.  Can go again"
-        self.get_user_data(username,type)#NEW MIGHT BREAK SOMETHING IDK
+        if type=="fitness":
+          self.add_events_fitness()
+        elif type=="sleep":
+          self.make_score_sleep()
+        else:
+          print "NoT FITNESS OR SLEEP?"
+
+        #self.get_user_data(username,type)#NEW MIGHT BREAK SOMETHING IDK
       else:
        print self.ErrorInAPI
 
@@ -224,7 +231,7 @@ class fitbit():
             message=pet_name+" got some exercise yesterday, but is still eager to play today "
             pet_status="avg_exercise"
           else:
-            message=pet_name+" got plenty of exercise yesterday and as a result he is very happy!"
+            message=pet_name+" got plenty of exercise yesterday and as a result he is very happy! +" + xp_change +" xp"
             pet_status="good_exercise"
           print "added"
           db.insert_events(username,category,pet_status,xp_change,message,type1)
@@ -251,9 +258,9 @@ class fitbit():
           db.insert_events(username,"sleep","awake",250, pet_name +" feels great today! It must be from getting enough sleep. +250 xp","1")
 
 
-#fitbit().add_events_fitness()
+# fitbit().add_events_fitness()
 
-fitbit().make_score_sleep()
+# fitbit().make_score_sleep()
 
 
 #TODO FITBIT IT FAILS FIRST TIME WHEN IT NEEDS TO USE REFRESH TOKEN 
