@@ -2,6 +2,7 @@
 package co.com.stohio.openshift.main;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +46,7 @@ public class SocialFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String url = "http://f6cd1422.ngrok.io/friends/find";
-        String bogos = "sksddfajddfsadfdsasdfasdffskkjlsadflkjdsalk";
+        String bogos = "sksddfajddfsadjdkdfdsasdfasdffskkjlsadflkjdsalk";
 
         JSONObject jo = new JSONObject();
         try {
