@@ -14,8 +14,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -24,7 +27,6 @@ import java.util.ArrayList;
 
 public class SocialFragment extends Fragment {
     public static RecyclerView.Adapter adapter;
-    public static JSONObject capture_response = new JSONObject();
     ArrayList results = new ArrayList<DataObject>();
     public static RecyclerView rv;
 
@@ -55,18 +57,23 @@ public class SocialFragment extends Fragment {
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response) {
-                        // Display the first 500 characters of the response string.
-                        // create the model
-                        capture_response = response;
                         Log.d("MyActivity", response.toString());
+                        JSONArray responseArray = new JSONArray();
+                        ArrayList<String> user_names = new ArrayList<String>();
+                        try {
+                            responseArray = response.getJSONArray("friends");
+                            for (int i = 0; i < responseArray.length(); i++) {
+                                user_names.add(responseArray.getJSONObject(i).getString("user_name"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-                        int l = capture_response.length();
-                        String lenght = Integer.toString(l);
-                        Log.d("MyActyivity", "Here is the length: " +lenght);
+                        int l = responseArray.length();
 
                         results.clear();
                         for (int index = 0; index < l; index++) {
-                            DataObject obj = new DataObject("Some Primary Text " + index, "Secondary " + index);
+                            DataObject obj = new DataObject(user_names.get(index), "Secondary " + index);
 
                             results.add(index, obj);
                         }
