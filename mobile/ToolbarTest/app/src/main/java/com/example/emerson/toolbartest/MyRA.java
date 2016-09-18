@@ -74,6 +74,10 @@ public class MyRA extends RecyclerView
         notifyItemRemoved(index);
     }
 
+    public void clearData() {
+        mDataset.clear(); //clear list
+    }
+
     @Override
     public int getItemCount() {
         return mDataset.size();
