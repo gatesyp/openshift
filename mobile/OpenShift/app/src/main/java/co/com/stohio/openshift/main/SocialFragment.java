@@ -46,7 +46,7 @@ public class SocialFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String url = "http://f6cd1422.ngrok.io/friends/find";
-        String bogos = "sksddfajddfsadfdsasdfasdffskkjlsadflkjdsalk";
+        String bogos = "sksddfajddfsadjdkdfdsasdfasdffskkjlsadflkjdsalk";
 
         JSONObject jo = new JSONObject();
         try {
