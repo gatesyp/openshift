@@ -76,6 +76,7 @@ public class SocialFragment extends Fragment {
                         // Display the first 500 characters of the response string.
                         // create the model
                         returner = response;
+
                         Log.d("MyActivity", "eeDONGER");
                         Log.d("MyActivity", response.toString());
                     }
@@ -89,12 +90,15 @@ public class SocialFragment extends Fragment {
 
         queue.add(jsObjRequest);
 
+
         int l = returner.length();
+
+
         String lenght = Integer.toString(l);
 
         Log.d("MyActyivity", "Here is the length: " +lenght);
 
-        for (int index = 0; index < 20; index++) {
+        for (int index = 0; index < l; index++) {
             DataObject obj = new DataObject("Some Primary Text " + index, "Secondary " + index);
             results.add(index, obj);
         }
