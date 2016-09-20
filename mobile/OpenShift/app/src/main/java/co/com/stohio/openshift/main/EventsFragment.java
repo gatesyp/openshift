@@ -89,9 +89,10 @@ public class EventsFragment extends Fragment {
                         Log.d("DONGERDONGERDONGERDONGE", xp_change.get(0));
 
                         results.clear();
-                        for (int index = 0; index < l; index++) {
+                        for (int index = 0; index < 2; index++) {
                             int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
-                            DataObject obj = new DataObject(user_names.get(index), current_xp.get(index), id);
+//                            DataObject obj = new DataObject(user_names.get(index), current_xp.get(index), id);
+                            DataObject obj = new DataObject("Primary", "Secondary ",  id, "Pet level", "pet state");
 
                             results.add(index, obj);
                         }

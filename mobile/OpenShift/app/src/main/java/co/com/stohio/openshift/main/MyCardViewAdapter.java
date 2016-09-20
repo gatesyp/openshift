@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import co.com.stohio.openshift.R;
@@ -27,6 +29,8 @@ public class MyCardViewAdapter extends RecyclerView
             .OnClickListener {
         TextView label;
         TextView dateTime;
+        TextView petState;
+        TextView petLevel;
         ImageView image;
 
         public DataObjectHolder(View itemView) {
@@ -34,6 +38,8 @@ public class MyCardViewAdapter extends RecyclerView
             label = (TextView) itemView.findViewById(R.id.textView);
             dateTime = (TextView) itemView.findViewById(R.id.textView2);
             image = (ImageView) itemView.findViewById(R.id.imageView1);
+            petState = (TextView) itemView.findViewById(R.id.textView3);
+            petLevel = (TextView) itemView.findViewById(R.id.textView4);
 //            Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -67,6 +73,8 @@ public class MyCardViewAdapter extends RecyclerView
         holder.label.setText(mDataset.get(position).getmText1());
         holder.dateTime.setText(mDataset.get(position).getmText2());
         holder.image.setImageResource(mDataset.get(position).getmImgId());
+        holder.petState.setText(mDataset.get(position).getmText3());
+        holder.petLevel.setText(mDataset.get(position).getmText4());
 //        int id = getResources().
 //        holder.image.setImageResource(mDataset.get(position).getmImage());
     }

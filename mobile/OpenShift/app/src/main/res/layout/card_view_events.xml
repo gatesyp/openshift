@@ -22,29 +22,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+            <!--bogusdssdfdsd-->
 
             <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-                android:src="@drawable/ajs262" />
+                android:id="@+id/imageView1"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/happy" />
 
             <TextView
-            android:id="@+id/textView"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="right"
-            android:textStyle="bold"
+                android:textStyle="bold"
                 android:layout_marginLeft="70dp" />
 
             <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
-
-
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

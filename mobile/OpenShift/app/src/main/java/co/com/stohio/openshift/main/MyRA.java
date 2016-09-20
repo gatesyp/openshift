@@ -28,12 +28,17 @@ public class MyRA extends RecyclerView
         TextView label;
         TextView dateTime;
         ImageView image;
+        TextView petState;
+        TextView petLevel;
+
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.textView);
             dateTime = (TextView) itemView.findViewById(R.id.textView2);
             image = (ImageView) itemView.findViewById(R.id.imageView1);
+            petState = (TextView) itemView.findViewById(R.id.textView3);
+            petLevel = (TextView) itemView.findViewById(R.id.textView4);
 
 //            Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
@@ -68,6 +73,8 @@ public class MyRA extends RecyclerView
         holder.label.setText(mDataset.get(position).getmText1());
         holder.dateTime.setText(mDataset.get(position).getmText2());
         holder.image.setImageResource(mDataset.get(position).getmImgId());
+        holder.petState.setText(mDataset.get(position).getmText3());
+        holder.petLevel.setText(mDataset.get(position).getmText4());
 
     }
 

@@ -66,10 +66,26 @@ public class SocialFragment extends Fragment {
                         ArrayList<String> user_names = new ArrayList<String>();
                         ArrayList<String> pet_states = new ArrayList<String>();
                         ArrayList<String> pet_levels = new ArrayList<String>();
+                        ArrayList<JSONObject> users = new ArrayList<JSONObject>();
                         try {
-                            responseArray = response.getJSONArray("friends");
+                            responseArray = response.getJSONArray("get_advanced_friend_data");
+                            JSONObject user = responseArray.getJSONObject(0);
+                            JSONObject data = user.getJSONObject("data");
+                            String username = data.getString("username");
+                            JSONObject last_week_data = data.getJSONObject("last_week_data");
+                            String pet_state = last_week_data.getString("current_pet_state");
+                            int level = data.getInt("pet_level");
+                            Log.d("JSONOBJECT_USER", user.toString());
+                            Log.d("JSONOBJECT_data", data.toString());
+                            Log.d("JSONOBJECT_username", username);
+                            Log.d("JSONOBJECT_last_week", last_week_data.toString());
+                            Log.d("JSONOBJECT_pet_state", pet_state);
+                            Log.d("JSONOBJECT_level", Integer.toString(level));
+
+
                             for (int i = 0; i < responseArray.length(); i++) {
-                                user_names.add(responseArray.getJSONObject(i).getString("user_name"));
+                                user_names.add(responseArray.getJSONObject(i).getString("username"));
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -78,9 +94,15 @@ public class SocialFragment extends Fragment {
                         int l = responseArray.length();
 
                         results.clear();
-                        for (int index = 0; index < l; index++) {
-                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
-                            DataObject obj = new DataObject(user_names.get(index), "Secondary " + index, id);
+//                        for (int index = 0; index < l; index++) {
+//                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
+//                            DataObject obj = new DataObject(user_names.get(index), "Secondary " + index, id);
+//
+//                            results.add(index, obj);
+//                        }
+                        for (int index = 0; index < 2; index++) {
+                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + "emc67", null, null);
+                            DataObject obj = new DataObject("Primary", "Secondary ",  id, "PetLEvel", "petState");
 
                             results.add(index, obj);
                         }
@@ -92,6 +114,14 @@ public class SocialFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("MyActivity", "That didnt work! ");
+                        for (int index = 0; index < 2; index++) {
+                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + "emc67", null, null);
+                            DataObject obj = new DataObject("Primary", "Secondary ",  id, "PetLEvel", "petState");
+
+                            results.add(index, obj);
+                        }
+                        adapter = new MyRA(results);
+                        rv.setAdapter(adapter);
                     }
                 });
 
