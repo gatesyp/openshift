@@ -159,6 +159,42 @@ Example Response if a new event is NOT found
 }
 ```
 
+POST **/events/get_last_few**
+
+Get last events for a user. Specify username and the number events that you want as parameters. 
+
+Parameters 
+```
+  {  
+    "user_name": "rwr21",  
+    "num": "2" 
+  }  
+  ```
+
+
+Example Response if you request two events
+
+```
+{
+  "get_last_events": [
+    {
+      "category": "fitness",
+      "current_xp": "5806",
+      "user_name": "rwr21",
+      "pet_status": "fit",
+      "xp_change": "303"
+    },
+    {
+      "category": "fitness",
+      "current_xp": "5236",
+      "user_name": "rwr21",
+      "pet_status": "fit",
+      "xp_change": "423"
+    }
+  ]
+}
+```
+
 
 
 
