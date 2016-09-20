@@ -108,6 +108,87 @@ Example Response
 }
 ``` 
 
+
+POST **/friends/find_advanced**  
+Get all friend data
+
+Parameters 
+```
+ {  
+    "user_name": "rwr21"  
+ }  
+```
+
+
+Example Response
+
+
+```
+[
+  {
+    "data": {
+      "username": "emc67",
+      "new_events": [
+        null
+      ],
+      "percent_to_lvl": 0,
+      "last_week_data": {
+        "current_pet_state": "happy",
+        "future_pet_state": "happy",
+        "last_week_xp": {
+          "nutrition": 0,
+          "social": 0,
+          "sleep": 0,
+          "fitness": 0
+        }
+      },
+      "pet_level": 1
+    }
+  },
+  {
+    "data": {
+      "username": "ajs262",
+      "new_events": [
+        null
+      ],
+      "percent_to_lvl": 0,
+      "last_week_data": {
+        "current_pet_state": "happy",
+        "future_pet_state": "happy",
+        "last_week_xp": {
+          "nutrition": 0,
+          "social": 0,
+          "sleep": 0,
+          "fitness": 0
+        }
+      },
+      "pet_level": 1
+    }
+  },
+  {
+    "data": {
+      "username": "test",
+      "new_events": [
+        null
+      ],
+      "percent_to_lvl": 0,
+      "last_week_data": {
+        "current_pet_state": "happy",
+        "future_pet_state": "happy",
+        "last_week_xp": {
+          "nutrition": 0,
+          "social": 0,
+          "sleep": 0,
+          "fitness": 0
+        }
+      },
+      "pet_level": 1
+    }
+  }
+]
+```
+
+
 ##Events
 
 POST **/events/plaid**   
