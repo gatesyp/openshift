@@ -216,25 +216,28 @@ class fitbit():
         xp_change=self.make_score_fitness(username)
         type1=1
         wore_fitbit=True
+
         if xp_change==None:
           db.insert_events(username,category,"no_effect",0,"You did not sleep with your fitbit, so your score was uneffected",type1)
           wore_fitbit=False
           
         if wore_fitbit:
+          db.change_xp(username,  xp_change)
           if xp_change<=-300:
             message="You have seriously harmed " +pet_name + " from neglagence yesterday. Make it up to " + pet_name +" by exercising today"
-            pet_status="harmed_exercise"
+            pet_status="sick"
           elif xp_change<=100:
             message= pet_name+" is sad from the lack of exercise yesterday"
-            pet_status="low_exercise"
+            pet_status="sick"
           elif xp_change<=300:
             message=pet_name+" got some exercise yesterday, but is still eager to play today "
-            pet_status="avg_exercise"
+            pet_status="happy"
           else:
-            message=pet_name+" got plenty of exercise yesterday and as a result he is very happy! +" + xp_change +" xp"
-            pet_status="good_exercise"
+            message=pet_name+" got plenty of exercise yesterday and as a result he is very happy! +" + str(xp_change) +" xp"
+            pet_status="fit"
           print "added"
-          db.insert_events(username,category,pet_status,xp_change,message,type1)
+          current_xp=db.get_xp(username)
+          db.insert_events(username,category,pet_status,xp_change,message,type1,current_xp)
 
   def make_score_sleep(self):
     type="sleep"
@@ -242,6 +245,7 @@ class fitbit():
     users=db.get_all_users()
     for username in users:
       if db.is_fitbit_setup(username):
+        db.change_xp(username,result)
         pet_name=db.find_pet_of_user(username)
         result=self.get_user_data(username,type)
         print result
@@ -253,14 +257,15 @@ class fitbit():
         elif result<=400:
           db.insert_events(username,"sleep","sleepy",-250, pet_name +" is tired from the lack of sleep. -250 xp","1")
         elif result<=420:
-           db.insert_events(username,"sleep","sleepy",-125, pet_name +" is tired from the lack of sleep. -250 xp","1")
+          db.insert_events(username,"sleep","sleepy",-125, pet_name +" is tired from the lack of sleep. -250 xp","1")
         else:
           db.insert_events(username,"sleep","awake",250, pet_name +" feels great today! It must be from getting enough sleep. +250 xp","1")
 
 
-# fitbit().add_events_fitness()
+#fitbit().add_events_fitness()
 
 # fitbit().make_score_sleep()
 
 
 #TODO FITBIT IT FAILS FIRST TIME WHEN IT NEEDS TO USE REFRESH TOKEN 
+#fitbit().add_events_fitness()

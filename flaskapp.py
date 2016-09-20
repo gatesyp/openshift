@@ -34,7 +34,7 @@ t1.start()
 def MyThread2():
 	def call_si():
 	    si=social()
-	    social.calculate_social()
+	    si.calculate_social()
 
 	
 	schedule.every().day.at("1:00").do(call_si)
@@ -105,7 +105,7 @@ def add_friend():
 		data=request.get_json(force=True)
 		friend=data['friend_user_name']
 		user=data['user_name']
-		#SQLConnection().add_friend(user,friend)
+		SQLConnection().add_friend(user,friend)
 		return json.dumps(data)
 	except:
 		print "error add_friend"
@@ -121,6 +121,19 @@ def get_friends():
 		return json.dumps(temp)
 	except:
 		return "error get_friends"
+
+@app.route("/friends/find_advanced",methods=["POST"])
+def get_friends_advanced():
+	try:
+		db=SQLConnection()
+		data=request.get_json(force=True)
+		user=data['user_name']
+		temp=db.get_advanced_friend_data(user)
+		return temp
+	except:
+		return "get_friends_advanced error"
+
+
 
 
 
@@ -153,13 +166,16 @@ def get_new_events():
 
 @app.route("/events/get_last_few",methods =["POST"])
 def get_last_few():
-	temp={}
-	db=SQLConnection()
-	data=request.get_json(force=True)
-	user_name=data['user_name']
-	num=int(data['num'])
-	temp['events']=db.get_last(user_name,num)
-	return json.dumps(temp)
+	try:
+		db=SQLConnection()
+		data=request.get_json(force=True)
+		user_name=data['user_name']
+		num=int(data['num'])
+		temp=db.get_last(user_name,num)
+		return (temp)
+	except:
+		print "get_last_few error"
+
 
 
 
@@ -190,6 +206,5 @@ def other():
 
 
 
-
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=False)

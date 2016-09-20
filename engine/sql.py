@@ -1,6 +1,7 @@
 import sys, ConfigParser
 import MySQLdb as mdb
 from plaid.utils import json
+from datetime import datetime, timedelta
 import math
 import uuid
 import hashlib
@@ -93,11 +94,31 @@ class SQLConnection:
     def get_last(self,username,number_of_events):
         num=number_of_events
         messages=[]
+        make_json={}
         user_id=self.find_id_of_user(username)
         for items in self.query("SELECT event_id FROM event_list WHERE `user_id` LIKE %s ORDER BY id DESC LIMIT 0, %s",[user_id,num]):
-            messages.append(self.query("SELECT message FROM events WHERE `id` LIKE %s",[items['event_id']])[0])            
-        print messages
-        return messages
+            temp=(self.query("SELECT xp_change FROM events WHERE `id` LIKE %s",[items['event_id']])[0]["xp_change"])  
+
+            temp=str(temp)
+            make_json["xp_change"]=temp
+            #messages.append(self.query("SELECT message FROM events WHERE `id` LIKE %s",[items["event_id"]])[0])   
+            make_json["category"]=(self.query("SELECT category FROM events WHERE `id` LIKE %s",[items["event_id"]])[0]["category"])             
+            make_json["pet_status"]=(self.query("SELECT pet_status FROM events WHERE `id` LIKE %s",[items["event_id"]])[0]["pet_status"])
+            make_json["current_xp"]=str((self.query("SELECT current_xp FROM events WHERE `id` LIKE %s",[items["event_id"]])[0]["current_xp"])) 
+            make_json["user_name"] = str(username) 
+            messages.append(make_json)
+            make_json={}
+
+
+        #messages= 
+        make_json={}
+
+        make_json["get_last_events"]=messages
+        print type(make_json)
+        dog= str(make_json).replace("'",'"')
+        #print json.dumps(make_json)
+        print dog
+        return dog
 
 
     def check_or_add(self,user_name,pet_name,password): # tries to create an account, if one does not exist it creates it. 
@@ -128,6 +149,120 @@ class SQLConnection:
         xp=xp['xp']+xp_change
         self.query("UPDATE `users` SET `xp` = %s WHERE `user_name`=%s",[xp,username])
 
+   
+    def get_advanced_friend_data(self,username):
+        make_json=[]
+        for items in self.get_friends(username):
+            names=items['user_name']
+            make_json.append(self.build_json(names))
+        #print make_json.replace("'","")
+       # make_json=str(make_json).replace("'","")
+        #print json.loads(make_json)
+        make_json={"get_advanced_friend_data": make_json}
+        return json.dumps(make_json)
+
+    def get_last_week_xp(self,username):
+        user_id=self.find_id_of_user(username)
+        d = datetime.today() - timedelta(days=7)
+        make_json={}
+        nutrition=0
+        neg_nutrition=0
+        fitness=0
+        neg_fitness=0
+        social=0
+        neg_social=0
+        sleep=0
+        neg_sleep=0
+        total_xp=0
+        date= "%s-%s-%s %s:%s:%s" % (d.year,d.month,d.day, d.hour, d.minute, d.second)
+        first=True
+        for items in reversed(self.query("SELECT event_id FROM `event_list` WHERE `user_id` = %s AND `timestamp` > %s",(user_id,date))):
+            event_id= items["event_id"]
+            if first:
+                pet_status=self.query("SELECT pet_status FROM `events` WHERE `id` = %s",[event_id])[0]['pet_status']
+                first=False
+           # print self.query("SELECT timestamp FROM `event_list` WHERE `user_id` = %s AND `event_id` = %s",(user_id,event_id))[0]['timestamp']
+            xp_gained= self.query("SELECT xp_change FROM `events` WHERE `id` LIKE %s",[event_id])[0]['xp_change']
+            category=self.query("SELECT category FROM `events` WHERE `id` LIKE %s",[event_id])[0]['category']
+            if category=="nutrition":
+                if xp_gained<0:
+                    neg_nutrition-=xp_gained
+                else:
+                    nutrition+=xp_gained
+            elif category=="fitness":
+                if xp_gained<0:
+                    neg_fitness-=xp_gained
+                else:
+                    fitness+=xp_gained
+            elif category=="social":
+                if xp_gained<0:
+                    neg_social-=xp_gained
+                else:
+                    social+=xp_gained
+            elif category=="sleep":
+                if xp_gained<0:
+                    neg_sleep-=xp_gained
+                else:
+                    sleep+=xp_gained
+
+        players = {'sleep': sleep, 'fitness': fitness, 'social': social, 'nutrition': nutrition, 'neg_nutrition': neg_nutrition, 'neg_fitness': neg_fitness, 'neg_social': neg_social, 'neg_sleep': neg_sleep} #find max value
+        winner = max(players, key=players.get)
+        if winner in ('sleep','social','nutrition'):
+            pet_state='happy'
+        if winner == "fitness":
+            pet_state="fit"
+        if winner == "neg_sleep":
+            pet_state="tired"
+        if winner == "neg_fitness":
+            pet_state="sick"
+        if winner == "neg_nutrition":
+            pet_state="bloated"
+        if winner=='neg_social':
+            pet_state="sick"
+        print winner
+        print neg_social
+        print social
+       
+        make_json={ "current_pet_state": pet_state,"future_pet_state": pet_state, "last_week_xp": {"sleep": sleep-neg_sleep, "fitness": fitness-neg_fitness, "nutrition": nutrition-neg_nutrition, "social": social-neg_social} } 
+        #print json.dumps(make_json)
+        return make_json
+       # print players
+        # print(winner, 'wins')
+
+        # print sleep
+        # pet_state="happy"
+
+
+
+    def get_next_week_pet_status(self,username):
+        pass
+
+
+
+
+    def build_json(self,username):
+        make_json={}
+        lvl=make_json["lvl"]=self.get_lvl(username)
+        pet_status_etc=(self.get_last_week_xp(username))
+        percent=self.get_percent(username,lvl)
+        new_events=self.get_events(username)
+       # pet_state=
+        data = { "data": {"username":username,"new_events":new_events,'pet_level': lvl, 'percent_to_lvl': percent, "last_week_data" :pet_status_etc} }
+        
+        #print json.dumps(data)
+        return (data)
+    def get_percent(self,username,level):
+        xp=self.get_xp(username)
+        build_json={}
+        if xp<=5000:
+            percent_to_next_level=0
+            return 0
+        else:
+           percent_to_next_level= format(((((xp))-(level*250))/250)%1*100, '.2f') #calculates % to lvl to two decimal places
+        return percent_to_next_level
+
+
+
     def get_lvl(self,username):
         xp=self.get_xp(username)
         if xp<=5000:
@@ -135,7 +270,12 @@ class SQLConnection:
             return lvl
         else:
             lvl=math.floor((xp-5000)/(250))
-            return lvl 
+            #print xp
+            #print lvl *250
+            return lvl
+            
+            #build_json['current_lvl']=lvl
+           
         
 
     def add_friend(self,username,friend_username):
@@ -177,8 +317,8 @@ class SQLConnection:
                 self.query("UPDATE `users` SET `xp_diff` = %s WHERE `users`.`user_name` = %s",[xp_diff,people])
         return "done"  
 
-    def insert_events(self,username,category,pet_status,xp_change,message,type):
-        self.query("INSERT INTO `events` (`id`, `category`,`pet_status`,`xp_change`,`message`,`type`) VALUES ( NULL, %s,%s, %s,%s,%s)",(category,pet_status,xp_change,message,type))
+    def insert_events(self,username,category,pet_status,xp_change,message,type,current_xp):
+        self.query("INSERT INTO `events` (`id`, `category`,`pet_status`,`xp_change`,`message`,`type`,`current_xp`) VALUES ( NULL, %s,%s, %s,%s,%s,%s)",(category,pet_status,xp_change,message,type,current_xp))
         temp= self.query("SELECT id FROM events ORDER BY id DESC LIMIT 0, 1")
         temp=temp[0]
         trans_id= temp['id']
@@ -204,17 +344,19 @@ class SQLConnection:
                 event=self.query("SELECT message FROM `events` WHERE `id` = %s",[items["event_id"]]) #change message to * for full dict
                 event=event[0]
                 return_array.append(event)
-            json_events={}
-            json_events["event_list"]=return_array
-            json_events["level"]=self.get_lvl(username)
-            return_array=(json_events)
+            #json_events={}
+            #json_events["event_list"]=return_array
+            #json_events["level"]=self.get_lvl(username)
+            #return_array=(json_events)
+
             return return_array
             
         else:
             print return_array
-            return_array={}
-            return_array["event_list"]=None
-            return_array["level"]=self.get_lvl(username)
+            return_array.append(None)
+            #return_array={}
+            #return_array["event_list"]=None
+            #return_array["level"]=self.get_lvl(username)
             #return_array=json.dumps(return_array)
             return return_array
 #@@@@@@@@@@@@ END GENERAL METHODS @@@@@@@@@@@@@@#
@@ -297,7 +439,7 @@ class SQLConnection:
                 pet_name=self.find_pet_of_user(people)
                 message="As a result of your friends, " +pet_name+ " recieved "+ str(average_xp_change) + "xp!"
                 print average_xp_change
-                self.insert_events(people,"Social impact","tbd_SI",average_xp_change,message ,1)
+                self.insert_events(people,"social","happy",average_xp_change,message ,1)
         
                 
 ############## END METHODS INVOLING SOCIAL I ###############
@@ -307,12 +449,11 @@ class SQLConnection:
 #SQLConnection().get_lvl("rwr21")
 #SQLConnection().insert_events("rwr21","t","t",1,"t",1)
 
-SQLConnection().get_last("rwr21",5)
+#print SQLConnection().get_percent("rwr21",SQLConnection().get_lvl("rwr21"))
+#SQLConnection().build_json("rwr21")
 
-
-
-
+#SQLConnection().get_last("rwr21",2)
      
 
 
-#
+#SQLConnection().get_advanced_friend_data("rwr21")
