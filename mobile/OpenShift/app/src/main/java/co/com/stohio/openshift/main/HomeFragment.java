@@ -19,6 +19,12 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.github.mikephil.charting.charts.PieChart;
@@ -37,6 +43,10 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.LineData;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import co.com.stohio.openshift.lib.BottomSheetBehaviorGoogleMapsLike;
 import co.com.stohio.openshift.lib.MergedAppBarLayoutBehavior;
 
@@ -44,6 +54,7 @@ import co.com.stohio.openshift.lib.MergedAppBarLayoutBehavior;
  * Created by emerson on 9/16/16.
  */
 public class HomeFragment extends Fragment {
+    ArrayList results = new ArrayList<DataObject>();
     int[] mDrawables = {
             R.drawable.cheese_3,
             R.drawable.cheese_3,
@@ -71,6 +82,67 @@ public class HomeFragment extends Fragment {
 //            actionBar.setTitle(" ");
 //        }
 
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        String url = "http://f6cd1422.ngrok.io/events/get_last_few";
+        String bogos = "sksddfajddfsadfdsasdfasdffskkjlsadflkjdsalk";
+
+        JSONObject jo = new JSONObject();
+        try {
+            jo.put("user_name","rwr21");
+            jo.put("num", "2");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("Myactivity", "JSON posted to " + url + " is: " + jo.toString());
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, jo,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("MyActivity", response.toString());
+                        JSONArray responseArray = new JSONArray();
+                        ArrayList<String> user_names = new ArrayList<String>();
+                        ArrayList<String> pet_status = new ArrayList<String>();
+                        ArrayList<String> current_xp = new ArrayList<String>();
+                        ArrayList<String>  xp_change = new ArrayList<String>();
+                        ArrayList<String>  categorys = new ArrayList<String>();
+                        try {
+                            responseArray = response.getJSONArray("get_last_events");
+                            for (int i = 0; i < responseArray.length(); i++) {
+                                user_names.add(responseArray.getJSONObject(i).getString("user_name"));
+                                pet_status.add(responseArray.getJSONObject(i).getString("pet_status"));
+                                categorys.add(responseArray.getJSONObject(i).getString("category"));
+                                current_xp.add(responseArray.getJSONObject(i).getString("current_xp"));
+                                xp_change.add(responseArray.getJSONObject(i).getString("xp_change"));
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        int l = responseArray.length();
+                        Log.d("DONGERDONGERDONGERDONGE", Integer.toString(l));
+                        Log.d("DONGERDONGERDONGERDONGE", xp_change.get(0));
+
+                        results.clear();
+                        for (int index = 0; index < 2; index++) {
+                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
+//                            DataObject obj = new DataObject(user_names.get(index), current_xp.get(index), id);
+                            DataObject obj = new DataObject("Primary", "Secondary ",  id, "Pet level", "pet state");
+
+                            results.add(index, obj);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {//
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("MyActivity", "That didnt work! ");
+                    }
+                });
+
+        queue.add(jsObjRequest);
         ImageView imageView = (ImageView) v.findViewById(R.id.puppy);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
         Glide.with(this).load(R.raw.happy_b1).into(imageViewTarget);
