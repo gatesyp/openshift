@@ -73,8 +73,9 @@ public class MyCardViewAdapter extends RecyclerView
         holder.label.setText(mDataset.get(position).getmText1());
         holder.dateTime.setText(mDataset.get(position).getmText2());
         holder.image.setImageResource(mDataset.get(position).getmImgId());
-        holder.petState.setText(mDataset.get(position).getmText3());
-        holder.petLevel.setText(mDataset.get(position).getmText4());
+        //TODOOOOO FIX THIS I GET A NULL POINTER EXCEPTION
+//        holder.petState.setText(mDataset.get(position).getmText3());
+//        holder.petLevel.setText(mDataset.get(position).getmText4());
 //        int id = getResources().
 //        holder.image.setImageResource(mDataset.get(position).getmImage());
     }

@@ -31,11 +31,15 @@ public class MainActivity extends AppCompatActivity {
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_white_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_event_white_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_people_white_24dp);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_pets_white_24dp);
 
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
-        private String tabTitles[] = new String[] { "Home", "Events", "Social", "Showcase" };
+//        private String tabTitles[] = new String[] {"donger", "Events", "Social", "Showcase" };
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -54,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return 4;
         }
-        @Override
-        public CharSequence getPageTitle(int position) {
-            // Generate title based on item position
-            return tabTitles[position];
-        }
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            // Generate title based on item position
+//            return tabTitles[position];
+//        }
     }
 
 
@@ -69,7 +73,5 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-
 }
 
