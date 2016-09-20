@@ -14,8 +14,8 @@ import co.com.stohio.openshift.R;
 /**
  * Created by emerson on 9/17/16.
  */
-public class MyRA extends RecyclerView
-        .Adapter<MyRA
+public class MyCardViewAdapter extends RecyclerView
+        .Adapter<MyCardViewAdapter
         .DataObjectHolder> {
 
     private static String LOG_TAG = "MyRecyclerViewAdapter";
@@ -34,7 +34,6 @@ public class MyRA extends RecyclerView
             label = (TextView) itemView.findViewById(R.id.textView);
             dateTime = (TextView) itemView.findViewById(R.id.textView2);
             image = (ImageView) itemView.findViewById(R.id.imageView1);
-
 //            Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -49,7 +48,7 @@ public class MyRA extends RecyclerView
         this.myClickListener = myClickListener;
     }
 
-    public MyRA(ArrayList<DataObject> myDataset) {
+    public MyCardViewAdapter(ArrayList<DataObject> myDataset) {
         mDataset = myDataset;
     }
 
@@ -57,7 +56,7 @@ public class MyRA extends RecyclerView
     public DataObjectHolder onCreateViewHolder(ViewGroup parent,
                                                int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_view_social, parent, false);
+                .inflate(R.layout.card_view_events, parent, false);
 
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;
@@ -68,7 +67,8 @@ public class MyRA extends RecyclerView
         holder.label.setText(mDataset.get(position).getmText1());
         holder.dateTime.setText(mDataset.get(position).getmText2());
         holder.image.setImageResource(mDataset.get(position).getmImgId());
-
+//        int id = getResources().
+//        holder.image.setImageResource(mDataset.get(position).getmImage());
     }
 
     public void addItem(DataObject dataObj, int index) {

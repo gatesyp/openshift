@@ -45,7 +45,7 @@ public class SocialFragment extends Fragment {
         rv .setLayoutManager(llm);
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        String url = "http://f6cd1422.ngrok.io/friends/find";
+        String url = "http://f6cd1422.ngrok.io/friends/find_advanced";
         String bogos = "sksddfajddfsadjdkdfdsasdfasdffskkjlsadflkjdsalk";
 
         JSONObject jo = new JSONObject();
@@ -61,9 +61,11 @@ public class SocialFragment extends Fragment {
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("MyActivity", response.toString());
+                        Log.d("DONGERACTIVITERF", response.toString());
                         JSONArray responseArray = new JSONArray();
                         ArrayList<String> user_names = new ArrayList<String>();
+                        ArrayList<String> pet_states = new ArrayList<String>();
+                        ArrayList<String> pet_levels = new ArrayList<String>();
                         try {
                             responseArray = response.getJSONArray("friends");
                             for (int i = 0; i < responseArray.length(); i++) {
@@ -77,7 +79,8 @@ public class SocialFragment extends Fragment {
 
                         results.clear();
                         for (int index = 0; index < l; index++) {
-                            DataObject obj = new DataObject(user_names.get(index), "Secondary " + index);
+                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
+                            DataObject obj = new DataObject(user_names.get(index), "Secondary " + index, id);
 
                             results.add(index, obj);
                         }

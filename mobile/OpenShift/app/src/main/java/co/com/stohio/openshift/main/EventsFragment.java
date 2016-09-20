@@ -46,12 +46,13 @@ public class EventsFragment extends Fragment {
         rv .setLayoutManager(llm);
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        String url = "http://f6cd1422.ngrok.io/friends/find";
+        String url = "http://f6cd1422.ngrok.io/events/get_last_few";
         String bogos = "sksddfajddfsadfdsasdfasdffskkjlsadflkjdsalk";
 
         JSONObject jo = new JSONObject();
         try {
             jo.put("user_name","rwr21");
+            jo.put("num", "2");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -65,24 +66,36 @@ public class EventsFragment extends Fragment {
                         Log.d("MyActivity", response.toString());
                         JSONArray responseArray = new JSONArray();
                         ArrayList<String> user_names = new ArrayList<String>();
+                        ArrayList<String> pet_status = new ArrayList<String>();
+                        ArrayList<String> current_xp = new ArrayList<String>();
+                        ArrayList<String>  xp_change = new ArrayList<String>();
+                        ArrayList<String>  categorys = new ArrayList<String>();
                         try {
-                            responseArray = response.getJSONArray("friends");
+                            responseArray = response.getJSONArray("get_last_events");
                             for (int i = 0; i < responseArray.length(); i++) {
                                 user_names.add(responseArray.getJSONObject(i).getString("user_name"));
+                                pet_status.add(responseArray.getJSONObject(i).getString("pet_status"));
+                                categorys.add(responseArray.getJSONObject(i).getString("category"));
+                                current_xp.add(responseArray.getJSONObject(i).getString("current_xp"));
+                                xp_change.add(responseArray.getJSONObject(i).getString("xp_change"));
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
                         int l = responseArray.length();
+                        Log.d("DONGERDONGERDONGERDONGE", Integer.toString(l));
+                        Log.d("DONGERDONGERDONGERDONGE", xp_change.get(0));
 
                         results.clear();
                         for (int index = 0; index < l; index++) {
-                            DataObject obj = new DataObject(user_names.get(index), "Secondary " + index);
+                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
+                            DataObject obj = new DataObject(user_names.get(index), current_xp.get(index), id);
 
                             results.add(index, obj);
                         }
-                        adapter = new MyRA(results);
+                        adapter = new MyCardViewAdapter(results);
                         rv.setAdapter(adapter);
                     }
                 },
