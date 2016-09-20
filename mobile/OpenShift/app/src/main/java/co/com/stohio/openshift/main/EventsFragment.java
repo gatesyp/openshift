@@ -63,7 +63,7 @@ public class EventsFragment extends Fragment {
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("MyActivity", response.toString());
+                        Log.d("MyActivityEVENTSEVETNS", response.toString());
                         JSONArray responseArray = new JSONArray();
                         ArrayList<String> user_names = new ArrayList<String>();
                         ArrayList<String> pet_status = new ArrayList<String>();
@@ -73,12 +73,12 @@ public class EventsFragment extends Fragment {
                         try {
                             responseArray = response.getJSONArray("get_last_events");
                             for (int i = 0; i < responseArray.length(); i++) {
-                                user_names.add(responseArray.getJSONObject(i).getString("user_name"));
-                                pet_status.add(responseArray.getJSONObject(i).getString("pet_status"));
-                                categorys.add(responseArray.getJSONObject(i).getString("category"));
-                                current_xp.add(responseArray.getJSONObject(i).getString("current_xp"));
-                                xp_change.add(responseArray.getJSONObject(i).getString("xp_change"));
-
+                                JSONObject user = responseArray.getJSONObject(i);
+                                user_names.add(user.getString("user_name"));
+                                pet_status.add(user.getString("pet_status"));
+                                categorys.add(user.getString("category"));
+                                current_xp.add(user.getString("current_xp"));
+                                xp_change.add(user.getString("xp_change"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -92,7 +92,7 @@ public class EventsFragment extends Fragment {
                         for (int index = 0; index < 2; index++) {
                             int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
 //                            DataObject obj = new DataObject(user_names.get(index), current_xp.get(index), id);
-                            DataObject obj = new DataObject("Primary", "Secondary ",  id, "Pet level", "pet state");
+                            DataObject obj = new DataObject(user_names.get(index), xp_change.get(index),  id, "Pet level", "pet state");
 
                             results.add(index, obj);
                         }

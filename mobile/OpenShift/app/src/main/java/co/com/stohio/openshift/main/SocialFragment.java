@@ -63,29 +63,51 @@ public class SocialFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         Log.d("DONGERACTIVITERF", response.toString());
                         JSONArray responseArray = new JSONArray();
-                        ArrayList<String> user_names = new ArrayList<String>();
+                        ArrayList<JSONObject> users = new ArrayList<JSONObject>();
+                        ArrayList<String> usernames = new ArrayList<String>();
                         ArrayList<String> pet_states = new ArrayList<String>();
                         ArrayList<String> pet_levels = new ArrayList<String>();
-                        ArrayList<JSONObject> users = new ArrayList<JSONObject>();
+                        String username = new String();
+                        String pet_state = new String();
+
+//                        ArrayList<JSONObject> users = new ArrayList<JSONObject>();
                         try {
                             responseArray = response.getJSONArray("get_advanced_friend_data");
-                            JSONObject user = responseArray.getJSONObject(0);
-                            JSONObject data = user.getJSONObject("data");
-                            String username = data.getString("username");
-                            JSONObject last_week_data = data.getJSONObject("last_week_data");
-                            String pet_state = last_week_data.getString("current_pet_state");
-                            int level = data.getInt("pet_level");
-                            Log.d("JSONOBJECT_USER", user.toString());
-                            Log.d("JSONOBJECT_data", data.toString());
-                            Log.d("JSONOBJECT_username", username);
-                            Log.d("JSONOBJECT_last_week", last_week_data.toString());
-                            Log.d("JSONOBJECT_pet_state", pet_state);
-                            Log.d("JSONOBJECT_level", Integer.toString(level));
+//                            JSONObject users_object = responseArray.getJSONObject(0);
+//                            JSONObject data = users_object.getJSONObject("data");
+//                            String username = data.getString("username");
+//                            JSONObject last_week_data = data.getJSONObject("last_week_data");
+//                            String pet_state = last_week_data.getString("current_pet_state");
+//                            int level = data.getInt("pet_level");
+//                            Log.d("JSONOBJECT_USER", users_object.toString());
+//                            Log.d("JSONOBJECT_data", data.toString());
+//                            Log.d("JSONOBJECT_username", username);
+//                            Log.d("JSONOBJECT_last_week", last_week_data.toString());
+//                            Log.d("JSONOBJECT_pet_state", pet_state);
+//                            Log.d("JSONOBJECT_level", Integer.toString(level));
 
 
                             for (int i = 0; i < responseArray.length(); i++) {
-                                user_names.add(responseArray.getJSONObject(i).getString("username"));
+                                JSONObject users_object = responseArray.getJSONObject(i);
+                                JSONObject data = users_object.getJSONObject("data");
+                                username = data.getString("username");
+                                usernames.add(username);
 
+                                JSONObject last_week_data = data.getJSONObject("last_week_data");
+                                pet_state = last_week_data.getString("current_pet_state");
+                                pet_states.add(pet_state);
+
+                                int level = data.getInt("pet_level");
+                                pet_levels.add(Integer.toString(level));
+
+                                Log.d("JSONOBJECT_USER", users_object.toString());
+                                Log.d("JSONOBJECT_data", data.toString());
+                                Log.d("JSONOBJECT_username", username);
+                                Log.d("JSONOBJECT_last_week", last_week_data.toString());
+                                Log.d("JSONOBJECT_pet_state", pet_state);
+                                Log.d("JSONOBJECT_level", Integer.toString(level));
+                                users.add(responseArray.getJSONObject(0));
+//                                user_names.add(responseArray.getJSONObject(i).getString("username"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -100,10 +122,9 @@ public class SocialFragment extends Fragment {
 //
 //                            results.add(index, obj);
 //                        }
-                        for (int index = 0; index < 2; index++) {
-                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + "emc67", null, null);
-                            DataObject obj = new DataObject("Primary", "Secondary ",  id, "PetLEvel", "petState");
-
+                        for (int index = 0; index < l; index++) {
+                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + usernames.get(index), null, null);
+                            DataObject obj = new DataObject(usernames.get(index), pet_states.get(index),  id, pet_levels.get(index), "petState");
                             results.add(index, obj);
                         }
                         adapter = new MyRA(results);
