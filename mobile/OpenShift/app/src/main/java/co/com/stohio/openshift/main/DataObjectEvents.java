@@ -3,14 +3,14 @@ package co.com.stohio.openshift.main;
 /**
  * Created by emerson on 9/17/16.
  */
-public class DataObject {
+public class DataObjectEvents {
     private String mText1;
     private String mText2;
     private String mText3;
     private String mText4;
     private int mImgId;
 
-    DataObject (String text1, String text2, int imgid, String text3, String text4 ){
+    DataObjectEvents(String text1, String text2, int imgid, String text3, String text4 ){
         mText1 = text1;
         mText2 = text2;
         mImgId = imgid;

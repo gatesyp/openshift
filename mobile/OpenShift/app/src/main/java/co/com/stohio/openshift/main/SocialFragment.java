@@ -2,7 +2,6 @@
 package co.com.stohio.openshift.main;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +30,7 @@ import co.com.stohio.openshift.R;
 
 public class SocialFragment extends Fragment {
     public static RecyclerView.Adapter adapter;
-    ArrayList results = new ArrayList<DataObject>();
+    ArrayList results = new ArrayList<DataObjectSocial>();
     public static RecyclerView rv;
 
     @Override
@@ -73,20 +72,6 @@ public class SocialFragment extends Fragment {
 //                        ArrayList<JSONObject> users = new ArrayList<JSONObject>();
                         try {
                             responseArray = response.getJSONArray("get_advanced_friend_data");
-//                            JSONObject users_object = responseArray.getJSONObject(0);
-//                            JSONObject data = users_object.getJSONObject("data");
-//                            String username = data.getString("username");
-//                            JSONObject last_week_data = data.getJSONObject("last_week_data");
-//                            String pet_state = last_week_data.getString("current_pet_state");
-//                            int level = data.getInt("pet_level");
-//                            Log.d("JSONOBJECT_USER", users_object.toString());
-//                            Log.d("JSONOBJECT_data", data.toString());
-//                            Log.d("JSONOBJECT_username", username);
-//                            Log.d("JSONOBJECT_last_week", last_week_data.toString());
-//                            Log.d("JSONOBJECT_pet_state", pet_state);
-//                            Log.d("JSONOBJECT_level", Integer.toString(level));
-
-
                             for (int i = 0; i < responseArray.length(); i++) {
                                 JSONObject users_object = responseArray.getJSONObject(i);
                                 JSONObject data = users_object.getJSONObject("data");
@@ -116,18 +101,12 @@ public class SocialFragment extends Fragment {
                         int l = responseArray.length();
 
                         results.clear();
-//                        for (int index = 0; index < l; index++) {
-//                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
-//                            DataObject obj = new DataObject(user_names.get(index), "Secondary " + index, id);
-//
-//                            results.add(index, obj);
-//                        }
                         for (int index = 0; index < l; index++) {
                             int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + usernames.get(index), null, null);
-                            DataObject obj = new DataObject(usernames.get(index), pet_states.get(index),  id, pet_levels.get(index), "petState");
+                            DataObjectSocial obj = new DataObjectSocial(usernames.get(index), pet_states.get(index),  id, pet_levels.get(index), "petState");
                             results.add(index, obj);
                         }
-                        adapter = new MyRA(results);
+                        adapter = new MySocialAdapter(results);
                         rv.setAdapter(adapter);
                     }
                 },
@@ -137,11 +116,11 @@ public class SocialFragment extends Fragment {
                         Log.d("MyActivity", "That didnt work! ");
                         for (int index = 0; index < 2; index++) {
                             int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + "emc67", null, null);
-                            DataObject obj = new DataObject("Primary", "Secondary ",  id, "PetLEvel", "petState");
+                            DataObjectSocial obj = new DataObjectSocial("Primary", "Secondary ",  id, "PetLEvel", "petState");
 
                             results.add(index, obj);
                         }
-                        adapter = new MyRA(results);
+                        adapter = new MySocialAdapter(results);
                         rv.setAdapter(adapter);
                     }
                 });

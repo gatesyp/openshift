@@ -14,12 +14,11 @@ import co.com.stohio.openshift.R;
 /**
  * Created by emerson on 9/17/16.
  */
-public class MyRA extends RecyclerView
-        .Adapter<MyRA
+public class MyEventsAdapter extends RecyclerView
+        .Adapter<MyEventsAdapter
         .DataObjectHolder> {
 
-    private static String LOG_TAG = "MyRecyclerViewAdapter";
-    private ArrayList<DataObject> mDataset;
+    private ArrayList<DataObjectEvents> mDataset;
     private static MyClickListener myClickListener;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
@@ -27,10 +26,9 @@ public class MyRA extends RecyclerView
             .OnClickListener {
         TextView label;
         TextView dateTime;
-        ImageView image;
         TextView petState;
         TextView petLevel;
-
+        ImageView image;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
@@ -39,7 +37,6 @@ public class MyRA extends RecyclerView
             image = (ImageView) itemView.findViewById(R.id.imageView1);
             petState = (TextView) itemView.findViewById(R.id.textView3);
             petLevel = (TextView) itemView.findViewById(R.id.textView4);
-
 //            Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -54,7 +51,7 @@ public class MyRA extends RecyclerView
         this.myClickListener = myClickListener;
     }
 
-    public MyRA(ArrayList<DataObject> myDataset) {
+    public MyEventsAdapter(ArrayList<DataObjectEvents> myDataset) {
         mDataset = myDataset;
     }
 
@@ -62,7 +59,7 @@ public class MyRA extends RecyclerView
     public DataObjectHolder onCreateViewHolder(ViewGroup parent,
                                                int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_view_social, parent, false);
+                .inflate(R.layout.card_view_events, parent, false);
 
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;
@@ -72,13 +69,12 @@ public class MyRA extends RecyclerView
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.label.setText(mDataset.get(position).getmText1());
         holder.dateTime.setText(mDataset.get(position).getmText2());
-        holder.image.setImageResource(mDataset.get(position).getmImgId());
         holder.petState.setText(mDataset.get(position).getmText3());
         holder.petLevel.setText(mDataset.get(position).getmText4());
-
+        holder.image.setImageResource(mDataset.get(position).getmImgId());
     }
 
-    public void addItem(DataObject dataObj, int index) {
+    public void addItem(DataObjectEvents dataObj, int index) {
         mDataset.add(index, dataObj);
         notifyItemInserted(index);
     }

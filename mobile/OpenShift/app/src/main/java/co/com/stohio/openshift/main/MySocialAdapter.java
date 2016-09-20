@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import co.com.stohio.openshift.R;
@@ -16,12 +14,12 @@ import co.com.stohio.openshift.R;
 /**
  * Created by emerson on 9/17/16.
  */
-public class MyCardViewAdapter extends RecyclerView
-        .Adapter<MyCardViewAdapter
+public class MySocialAdapter extends RecyclerView
+        .Adapter<MySocialAdapter
         .DataObjectHolder> {
 
     private static String LOG_TAG = "MyRecyclerViewAdapter";
-    private ArrayList<DataObject> mDataset;
+    private ArrayList<DataObjectSocial> mDataset;
     private static MyClickListener myClickListener;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
@@ -29,9 +27,10 @@ public class MyCardViewAdapter extends RecyclerView
             .OnClickListener {
         TextView label;
         TextView dateTime;
+        ImageView image;
         TextView petState;
         TextView petLevel;
-        ImageView image;
+
 
         public DataObjectHolder(View itemView) {
             super(itemView);
@@ -40,6 +39,7 @@ public class MyCardViewAdapter extends RecyclerView
             image = (ImageView) itemView.findViewById(R.id.imageView1);
             petState = (TextView) itemView.findViewById(R.id.textView3);
             petLevel = (TextView) itemView.findViewById(R.id.textView4);
+
 //            Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -54,7 +54,7 @@ public class MyCardViewAdapter extends RecyclerView
         this.myClickListener = myClickListener;
     }
 
-    public MyCardViewAdapter(ArrayList<DataObject> myDataset) {
+    public MySocialAdapter(ArrayList<DataObjectSocial> myDataset) {
         mDataset = myDataset;
     }
 
@@ -62,7 +62,7 @@ public class MyCardViewAdapter extends RecyclerView
     public DataObjectHolder onCreateViewHolder(ViewGroup parent,
                                                int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_view_events, parent, false);
+                .inflate(R.layout.card_view_social, parent, false);
 
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;
@@ -73,14 +73,12 @@ public class MyCardViewAdapter extends RecyclerView
         holder.label.setText(mDataset.get(position).getmText1());
         holder.dateTime.setText(mDataset.get(position).getmText2());
         holder.image.setImageResource(mDataset.get(position).getmImgId());
-        //TODOOOOO FIX THIS I GET A NULL POINTER EXCEPTION
-//        holder.petState.setText(mDataset.get(position).getmText3());
-//        holder.petLevel.setText(mDataset.get(position).getmText4());
-//        int id = getResources().
-//        holder.image.setImageResource(mDataset.get(position).getmImage());
+        holder.petState.setText(mDataset.get(position).getmText3());
+        holder.petLevel.setText(mDataset.get(position).getmText4());
+
     }
 
-    public void addItem(DataObject dataObj, int index) {
+    public void addItem(DataObjectSocial dataObj, int index) {
         mDataset.add(index, dataObj);
         notifyItemInserted(index);
     }

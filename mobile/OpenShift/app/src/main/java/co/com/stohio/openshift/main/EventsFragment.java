@@ -2,8 +2,6 @@
 package co.com.stohio.openshift.main;
 
 import android.os.Bundle;
-import android.provider.CalendarContract;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +30,7 @@ import co.com.stohio.openshift.R;
 
 public class EventsFragment extends Fragment {
     public static RecyclerView.Adapter adapter;
-    ArrayList results = new ArrayList<DataObject>();
+    ArrayList results = new ArrayList<DataObjectEvents>();
     public static RecyclerView rv;
 
     @Override
@@ -92,11 +90,11 @@ public class EventsFragment extends Fragment {
                         for (int index = 0; index < 2; index++) {
                             int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
 //                            DataObject obj = new DataObject(user_names.get(index), current_xp.get(index), id);
-                            DataObject obj = new DataObject(user_names.get(index), xp_change.get(index),  id, "Pet level", "pet state");
+                            DataObjectEvents obj = new DataObjectEvents(user_names.get(index), xp_change.get(index),  id, "Pet level", "pet state");
 
                             results.add(index, obj);
                         }
-                        adapter = new MyCardViewAdapter(results);
+                        adapter = new MyEventsAdapter(results);
                         rv.setAdapter(adapter);
                     }
                 },
