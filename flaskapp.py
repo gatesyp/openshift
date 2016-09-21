@@ -29,7 +29,17 @@ t1.start()
 
 
 
-
+def MyThread3():
+	def call_fitbit_sleep():
+	    fb=fitbit()
+	    fb.make_score_sleep()
+	schedule.every().day.at("11:00").do(call_fitbit_sleep)
+	while 1:
+		 schedule.run_pending()
+		 time.sleep(1)
+t3=Thread(target=MyThread3,args=[])
+t3.daemon = True
+t3.start()
 
 def MyThread2():
 	def call_si():
@@ -37,7 +47,7 @@ def MyThread2():
 	    si.calculate_social()
 
 	
-	schedule.every().day.at("1:00").do(call_si)
+	schedule.every().day.at("11:59").do(call_si)
 	while 1:
 		 schedule.run_pending()
 		 time.sleep(1)
@@ -72,17 +82,18 @@ def create_user():
 		user_name=data['user_name']
 		pet_name=data['pet_name']
 		password=data['pass_word']
+		real_name=data['real_name']
 		print user_name
 		print pet_name
 		print password
-		return db.check_or_add(user_name,pet_name,password)
-		
+		return db.check_or_add(user_name,real_name,pet_name,password)
 	except:
-		return "create_user_error"
+		return "create user error"	
+	
 
 @app.route('/setup/login',methods=["POST"])
 def setup_login():
-	db=SQLConnection()
+	trydb=SQLConnection()
 	data=request.get_json(force=True)
 	username=data["user_name"]
 	password=data["pass_word"]
@@ -108,7 +119,7 @@ def add_friend():
 		SQLConnection().add_friend(user,friend)
 		return json.dumps(data)
 	except:
-		print "error add_friend"
+		return "error add_friend"
 
 @app.route("/friends/find",methods=["POST"])
 def get_friends():
@@ -136,8 +147,15 @@ def get_friends_advanced():
 
 
 
-
-
+@app.route("/events/get_data",methods=["POST"])
+def get_data():
+	try:
+		db=SQLConnection()
+		data=request.get_json(force=True)
+		user=data['user_name']
+		return json.dumps(db.build_json(user))
+	except:
+		return "get_data error"
 @app.route("/events/plaid",methods=["POST"])
 def events_plaid():
 	try:
@@ -174,7 +192,7 @@ def get_last_few():
 		temp=db.get_last(user_name,num)
 		return (temp)
 	except:
-		print "get_last_few error"
+		return "get_last_few error"
 
 
 
@@ -188,10 +206,14 @@ def test():
 	json_test= { "user_name": "e" }  
 	return json.dumps(json_test)
 
-@app.route("/api/post")
+@app.route("/api/do_everything")
 def other():
-    return "<strong>ROFL</strong>"
-
+	fb=fitbit()
+	fb.add_events_fitness()    
+	fb.make_score_sleep()
+	si=social()
+	si.calculate_social()
+	return 'done'
 
 
 
