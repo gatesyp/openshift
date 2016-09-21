@@ -12,11 +12,25 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.Gallery;
+import android.widget.ImageView;
+import android.widget.Toast;
+
 import co.com.stohio.openshift.R;
 
+@SuppressWarnings("deprecation")
 public class DemoFragment extends Fragment {
 
-    private int[] GalImages = new int[] {
+    Integer[] imageIDs=  {
             R.raw.happy, R.raw.bloated, R.raw.homestate_1, R.raw.homestate_2, R.raw.sick, R.raw.sick_1, R.raw.tired_pt1, R.raw.tired_pt2, R.drawable.home
 
     };
@@ -24,11 +38,18 @@ public class DemoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_demo, container, false);
+        // Note that Gallery view is deprecated in Android 4.1---
+        Gallery gallery = (Gallery) v.findViewById(R.id.gallery1);
+//        gallery.setAdapter(new ImageAdapter(this));
+//        gallery.setOnItemClickListener(new OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View v, int position,long id)
+//            {
+//                 display the images selected
+//                ImageView imageView = (ImageView) v.findViewById(R.id.image1);
+//                imageView.setImageResource(imageIDs[position]);
+//            }
+//        });
 
-        ItemPagerAdapter adapter = new ItemPagerAdapter(this.getActivity(),GalImages);
-        adapter.setActivity(getActivity());
-        ViewPager viewPager = (ViewPager) v.findViewById(R.id.mvieww);
-        viewPager.setAdapter(adapter);
 //        ImageView imageView1 = (ImageView) v.findViewById(R.id.demo1);
 //        GlideDrawableImageViewTarget imageViewTarget1 = new GlideDrawableImageViewTarget(imageView1);
 //        Glide.with(this).load(R.raw.homestate_1).into(imageViewTarget1);
@@ -57,6 +78,38 @@ public class DemoFragment extends Fragment {
 
         return f;
 
+    }
+    public class ImageAdapter extends BaseAdapter {
+        private Context context;
+        private int itemBackground;
+        public ImageAdapter(Context c)
+        {
+            context = c;
+            // sets a grey background; wraps around the images
+//            TypedArray a =obtainStyledAttributes(R.styleable.MyGallery);
+//            itemBackground = a.getResourceId(R.styleable.MyGallery_android_galleryItemBackground, 0);
+//            a.recycle();
+        }
+        // returns the number of images
+        public int getCount() {
+            return imageIDs.length;
+        }
+        // returns the ID of an item
+        public Object getItem(int position) {
+            return position;
+        }
+        // returns the ID of an item
+        public long getItemId(int position) {
+            return position;
+        }
+        // returns an ImageView view
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ImageView imageView = new ImageView(context);
+            imageView.setImageResource(imageIDs[position]);
+            imageView.setLayoutParams(new Gallery.LayoutParams(100, 100));
+            imageView.setBackgroundResource(itemBackground);
+            return imageView;
+        }
     }
 }
 

@@ -22,11 +22,11 @@ public class MyIntro extends AppIntro2 {
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest
 //        addSlide(AppIntroFragment.newInstance("", "Meet Fido!", R.drawable.home, Color.parseColor("#2E7D32")));
-        addSlide(AppIntroFragment.newInstance("Meet Fido!", "Collecting your real time data and outputting a cute puppy! ", R.drawable.home, Color.parseColor("#2E7D32")));
+        addSlide(AppIntroFragment.newInstance("Meet Fido!", "Collecting your real time data and producing a CUTE puppy! ", R.drawable.home, Color.parseColor("#2E7D32")));
         addSlide(AppIntroFragment.newInstance("Sick", "If you consistently make bad choices, Fido gets sick! ", R.drawable.sick, Color.parseColor("#2979FF")));
         addSlide(AppIntroFragment.newInstance("Happy", "However, if you consistently do great things he will be happy! ", R.drawable.happy, Color.parseColor("#FDD835")));
-        addSlide(AppIntroFragment.newInstance("Tired", "When getting low sleep sleep Fido will reflect that! ", R.drawable.tired, Color.parseColor("#42A5F5")));
-        addSlide(AppIntroFragment.newInstance("Bloated", "And if you eat fast food or don't get groceries, he starts feeling bloated", R.drawable.bloated, Color.parseColor("#0D47A1")));
+        addSlide(AppIntroFragment.newInstance("Tired", "When getting inconsistent sleep Fido will be tired! ", R.drawable.tired, Color.parseColor("#42A5F5")));
+        addSlide(AppIntroFragment.newInstance("Bloated", "And if you eat fast food , he gets bloated. Try going for a run! ", R.drawable.bloated, Color.parseColor("#0D47A1")));
 
         // OPTIONAL METHODS
 
