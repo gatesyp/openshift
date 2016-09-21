@@ -1,6 +1,7 @@
 package co.com.stohio.openshift.main;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -54,7 +56,7 @@ import co.com.stohio.openshift.lib.MergedAppBarLayoutBehavior;
  * Created by emerson on 9/16/16.
  */
 public class HomeFragment extends Fragment {
-    ArrayList results = new ArrayList<DataObject>();
+//    ArrayList results = new ArrayList<DataObject>();
     int[] mDrawables = {
             R.drawable.cheese_3,
             R.drawable.cheese_3,
@@ -117,6 +119,9 @@ public class HomeFragment extends Fragment {
                                 xp_change.add(responseArray.getJSONObject(i).getString("xp_change"));
 
                             }
+                            ImageView imageView = (ImageView) v.findViewById(R.id.puppy);
+                            GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
+                            Glide.with(getActivity()).load(R.raw.homestate_1).into(imageViewTarget);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -125,27 +130,27 @@ public class HomeFragment extends Fragment {
                         Log.d("DONGERDONGERDONGERDONGE", Integer.toString(l));
                         Log.d("DONGERDONGERDONGERDONGE", xp_change.get(0));
 
-                        results.clear();
-                        for (int index = 0; index < 2; index++) {
-                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
+//                        results.clear();
+//                        for (int index = 0; index < 2; index++) {
+//                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
 //                            DataObject obj = new DataObject(user_names.get(index), current_xp.get(index), id);
-                            DataObject obj = new DataObject("Primary", "Secondary ",  id, "Pet level", "pet state");
+//                            DataObject obj = new DataObject("Primary", "Secondary ",  id, "Pet level", "pet state");
 
-                            results.add(index, obj);
-                        }
+//                            results.add(index, obj);
+//                        }
                     }
                 },
                 new Response.ErrorListener() {//
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        ImageView imageView = (ImageView) v.findViewById(R.id.puppy);
+                        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
+                        Glide.with(getActivity()).load(R.raw.homestate_1).into(imageViewTarget);
                         Log.d("MyActivity", "That didnt work! ");
                     }
                 });
 
         queue.add(jsObjRequest);
-        ImageView imageView = (ImageView) v.findViewById(R.id.puppy);
-        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
-        Glide.with(this).load(R.raw.happy_b1).into(imageViewTarget);
 
         /**
          * If we want to listen for states callback
@@ -202,6 +207,22 @@ public class HomeFragment extends Fragment {
 
         return v;
     }
+    // placeholder code to run selected code on a thread
+//    private void runThread(){
+//
+//        final int interval = 2000; // 1 Second
+//        Handler handler = new Handler();
+//        Runnable runnable = new Runnable(){
+//            public void run() {
+//                Toast.makeText(getActivity(), "C'Mom no hands!", Toast.LENGTH_SHORT).show();
+//                ImageView imageView = (ImageView) v.findViewById(R.id.puppy);
+//                GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
+//                Glide.with(getActivity()).load(R.raw.homestate_2).into(imageViewTarget);
+//            }
+//        };
+//        handler.postAtTime(runnable, System.currentTimeMillis()+interval);
+//        handler.postDelayed(runnable, interval);
+//    }
 
     private void setCharts(){
         // grab data from server

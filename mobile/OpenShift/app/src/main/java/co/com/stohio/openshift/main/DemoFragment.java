@@ -21,7 +21,7 @@ public class DemoFragment extends Fragment {
 
         ImageView imageView = (ImageView) v.findViewById(R.id.demo);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
-        Glide.with(this).load(R.raw.HomeState_pt1).into(imageViewTarget);
+        Glide.with(this).load(R.raw.homestate_1).into(imageViewTarget);
         return v;
     }
 
