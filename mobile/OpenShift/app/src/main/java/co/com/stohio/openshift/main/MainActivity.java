@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
                 boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
 
                 //  If the activity has never started before...
-                if (isFirstStart) {
+                if (true) {
 
-                    //  Launch app intro
+                    //  Launch appintro
                     Intent i = new Intent(MainActivity.this, MyIntro.class);
                     startActivity(i);
 
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_white_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_event_white_24dp);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_people_white_24dp);
-        tabLayout.getTabAt(3).setIcon(R.drawable.ic_pets_white_24dp);
+//        tabLayout.getTabAt(3).setIcon(R.drawable.ic_pets_white_24dp);
 
 
 
@@ -85,14 +85,14 @@ public class MainActivity extends AppCompatActivity {
                 case 0: return HomeFragment.newInstance("Home");
                 case 1: return EventsFragment.newInstance("Events");
                 case 2: return SocialFragment.newInstance("Social");
-                case 3: return DemoFragment.newInstance("Showcase");
+//                case 3: return DemoFragment.newInstance("Showcase");
                 default: return SocialFragment.newInstance("Default");
             }
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
 //        @Override
 //        public CharSequence getPageTitle(int position) {

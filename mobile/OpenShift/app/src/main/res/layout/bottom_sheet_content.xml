@@ -28,7 +28,7 @@
                 android:id="@+id/bottom_sheet_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Future Predictions"
+                android:text="inter*pet"
                 android:textColor="@android:color/white"
                 android:textSize="19sp"/>
 
@@ -36,7 +36,7 @@
                 android:id="@+id/text_dummy1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Advanced"
+                android:text="Future View"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 android:layout_marginTop="5dp"/>
@@ -74,6 +74,7 @@
         android:paddingBottom="12dp"
         android:background="@drawable/border_bottom">
 
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
@@ -81,148 +82,40 @@
             android:id="@+id/pieView"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
             plainpie:inner_pie_padding="30"
             plainpie:percentage="75"
             plainpie:percentage_size="70"
             plainpie:inner_text_visibility="true"/>
 
-            <!--<ImageButton-->
-                <!--android:id="@+id/button1"-->
-                <!--android:layout_width="70dp"-->
-                <!--android:layout_height="60dp"-->
-                <!--android:src="@android:drawable/ic_dialog_map"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:background="?attr/selectableItemBackgroundBorderless"/>-->
-
-        <!--</RelativeLayout>-->
-
-
-        <LinearLayout
-            android:id="@+id/exp_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp">
-            <TextView
+            <LinearLayout
+                android:id="@+id/exp_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Progress to Next Level"
-                android:textColor="@android:color/black"
-                android:gravity="right"
-                android:textAlignment="gravity"
-                android:layout_alignParentBottom="true"/>
+                android:orientation="vertical"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Progress to Next Level"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="right"
+                    android:textAlignment="gravity"
+                    android:layout_alignParentBottom="true"/>
 
-            <!--<ImageButton-->
-                <!--android:id="@+id/button2"-->
-                <!--android:layout_width="70dp"-->
-                <!--android:layout_height="60dp"-->
-                <!--android:src="@android:drawable/ic_dialog_info"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:background="?attr/selectableItemBackgroundBorderless"/>-->
+            </LinearLayout>
 
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="BUTTON 2"-->
-                <!--android:textColor="@android:color/black"/>-->
-        </LinearLayout>
 
-        <!--<RelativeLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent">-->
 
-            <!--<ImageButton-->
-                <!--android:id="@+id/establecimiento_share_button"-->
-                <!--android:layout_width="70dp"-->
-                <!--android:layout_height="60dp"-->
-                <!--android:src="@android:drawable/ic_menu_share"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:background="?attr/selectableItemBackgroundBorderless"/>-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="BUTTON 3"-->
-                <!--android:textColor="@android:color/black"-->
-                <!--android:layout_alignParentBottom="true"/>-->
         </RelativeLayout>
     </LinearLayout>
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_bottom">
 
-        <!--<ImageView-->
-            <!--android:id="@+id/establecimiento_icon_sucursales"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:srcCompat="@android:drawable/ic_secure"-->
-            <!--android:layout_marginEnd="16dp"-->
-            <!--android:layout_marginTop="12dp"-->
-            <!--android:layout_marginStart="16dp"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:layout_alignParentTop="true"/>-->
-
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_toEndOf="@id/establecimiento_icon_sucursales"-->
-            <!--android:layout_marginStart="16dp"-->
-            <!--android:layout_marginEnd="16dp">-->
-
-            <!--<FrameLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="48dp">-->
-
-                <!--<Button-->
-                    <!--android:id="@+id/establecimiento_sucursal_row_button"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="Text dummy 1"-->
-                    <!--android:layout_gravity="center_vertical"-->
-                    <!--android:background="?attr/selectableItemBackgroundBorderless"-->
-                    <!--android:textAllCaps="false"-->
-                    <!--android:textColor="@android:color/black"/>-->
-            <!--</FrameLayout>-->
-
-            <!--<FrameLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="48dp">-->
-
-                <!--<Button-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="Text dummy 2"-->
-                    <!--android:layout_gravity="center_vertical"-->
-                    <!--android:background="?attr/selectableItemBackgroundBorderless"-->
-                    <!--android:textAllCaps="false"-->
-                    <!--android:textColor="@android:color/black"/>-->
-            <!--</FrameLayout>-->
-
-            <!--<FrameLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="48dp">-->
-
-                <!--<Button-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="Text dummy 3"-->
-                    <!--android:layout_gravity="center_vertical"-->
-                    <!--android:background="?attr/selectableItemBackgroundBorderless"-->
-                    <!--android:textAllCaps="false"-->
-                    <!--android:textColor="@android:color/black"/>-->
-            <!--</FrameLayout>-->
-
-        <!--</LinearLayout>-->
-
-    </RelativeLayout>
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="222dp"
         android:layout_marginStart="16dp"
@@ -230,60 +123,54 @@
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart"
+            android:layout_marginTop="70dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="APACHE LICENSE"-->
-        <!--android:layout_gravity="center_vertical"-->
-        <!--android:textSize="18sp"-->
-        <!--android:textColor="@android:color/darker_gray"/>-->
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+
+                android:text="EXP Over Time"
+                android:textSize="22sp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="222dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp">
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pie_chart"
             android:layout_width="match_parent"
+            android:layout_marginTop="30sp"
+            android:textSize="20sp"
             android:layout_height="match_parent" />
-    </FrameLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="222dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
 
-        <com.github.mikephil.charting.charts.RadarChart
-            android:id="@+id/radar_chart"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="110dp"
+                android:textColor="#000000"
+
+                android:text="Event Breakdown"
+                android:textSize="22sp"
+                />
+
+        </LinearLayout>
+
     </FrameLayout>
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_margin="16dp"-->
-
-    <!--android:text="@string/dummy_text"-->
-    <!--android:textSize="12sp"-->
-    <!--android:textColor="@android:color/black"/>-->
-
-    <!--<FrameLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="620dp"-->
-    <!--android:background="@color/colorAccent"-->
-    <!--android:layout_marginTop="40dp">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:text="Your remaining content here"-->
-    <!--android:textColor="@android:color/white" />-->
-
-    <!--</FrameLayout>-->
 </LinearLayout>

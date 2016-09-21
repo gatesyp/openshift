@@ -2,12 +2,9 @@ package co.com.stohio.openshift.main;
 
 //import android.Manifest;
 
-import android.Manifest;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
@@ -24,11 +21,12 @@ public class MyIntro extends AppIntro2 {
 
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest
-        addSlide(AppIntroFragment.newInstance("inter pet", "Collecting your real time data and outputting a cute puppy! ", R.drawable.neutral, Color.parseColor("#2E7D32")));
-        addSlide(AppIntroFragment.newInstance("Sick", "If you consistently make bad choices, your pet starts getting sick! ", R.drawable.sick, Color.parseColor("#2979FF")));
+//        addSlide(AppIntroFragment.newInstance("", "Meet Fido!", R.drawable.home, Color.parseColor("#2E7D32")));
+        addSlide(AppIntroFragment.newInstance("Meet Fido!", "Collecting your real time data and outputting a cute puppy! ", R.drawable.home, Color.parseColor("#2E7D32")));
+        addSlide(AppIntroFragment.newInstance("Sick", "If you consistently make bad choices, Fido gets sick! ", R.drawable.sick, Color.parseColor("#2979FF")));
         addSlide(AppIntroFragment.newInstance("Happy", "However, if you consistently do great things he will be happy! ", R.drawable.happy, Color.parseColor("#FDD835")));
-        addSlide(AppIntroFragment.newInstance("Tired", "When getting low sleep sleep Fido will reflect that! ", R.drawable.refactor, Color.parseColor("#42A5F5")));
-        addSlide(AppIntroFragment.newInstance("Bloated", "And if you eat fast food or don't get groceries, he starts feeling bloated :( ", R.drawable.bloated, Color.parseColor("#0D47A1")));
+        addSlide(AppIntroFragment.newInstance("Tired", "When getting low sleep sleep Fido will reflect that! ", R.drawable.tired, Color.parseColor("#42A5F5")));
+        addSlide(AppIntroFragment.newInstance("Bloated", "And if you eat fast food or don't get groceries, he starts feeling bloated", R.drawable.bloated, Color.parseColor("#0D47A1")));
 
         // OPTIONAL METHODS
 

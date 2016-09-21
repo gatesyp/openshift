@@ -44,14 +44,14 @@ public class EventsFragment extends Fragment {
         rv .setLayoutManager(llm);
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-//        String url = "http://f6cd1422.ngrok.io/events/get_last_few";
-        String url = "http://myapppython27-openshift1.0ec9.hackathon.openshiftapps.com/events/get_last_few";
-        String bogos = "sksddfajddfsadfdsasdfasdffskkjlsadflkjdsalk";
+        String url = "http://e925d3c8.ngrok.io/events/get_last_few";
+//        String url = "http://myapppython27-openshift1.0ec9.hackathon.openshiftapps.com/events/get_last_few";
+        String bogos = "sksddfajddfsadfdsasdfasdffskkjjkjkjlsadflkjdsalk";
 
         JSONObject jo = new JSONObject();
         try {
             jo.put("user_name","rwr21");
-            jo.put("num", "2");
+            jo.put("num", "8");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class EventsFragment extends Fragment {
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("MyActivityEVENTSEVETNS", response.toString());
+                        Log.d("Here is REQUSTE", response.toString());
                         JSONArray responseArray = new JSONArray();
                         ArrayList<String> user_names = new ArrayList<String>();
                         ArrayList<String> pet_status = new ArrayList<String>();
@@ -84,12 +84,12 @@ public class EventsFragment extends Fragment {
                         }
 
                         int l = responseArray.length();
-                        Log.d("DONGERDONGERDONGERDONGE", Integer.toString(l));
+                        Log.d("DONGERDOGERDONGERDONGE", Integer.toString(l));
                         Log.d("DONGERDONGERDONGERDONGE", xp_change.get(0));
 
                         results.clear();
-                        for (int index = 0; index < 2; index++) {
-                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
+                        for (int index = 0; index < l; index++) {
+                            int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + pet_status.get(index), null, null);
 //                            DataObject obj = new DataObject(user_names.get(index), current_xp.get(index), id);
                             DataObjectEvents obj = new DataObjectEvents(categorys.get(index), xp_change.get(index),  current_xp.get(index), id);
 

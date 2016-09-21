@@ -2,6 +2,7 @@ package co.com.stohio.openshift.main;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +14,20 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import co.com.stohio.openshift.R;
 
-public class ItemPagerAdapter extends android.support.v4.view.PagerAdapter {
-
-    Context mContext;
+/**
+ * Created by root on 9/21/16.
+ */
+public class ImageAdapter extends PagerAdapter {
+    Context Context;
     LayoutInflater mLayoutInflater;
     final int[] mItems;
     Activity activity;
     public void setActivity(Activity activity){
         this.activity = activity;
     }
-    public ItemPagerAdapter(Context context, int[] items) {
-        this.mContext = context;
-        this.mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public ImageAdapter(Context context, int[] items) {
+        this.Context = context;
+        this.mLayoutInflater = (LayoutInflater) Context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mItems = items;
     }
 
@@ -41,9 +44,9 @@ public class ItemPagerAdapter extends android.support.v4.view.PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
-        ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
+        ImageView imageView = (ImageView) itemView.findViewById(R.id.demos);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
-        Glide.with(this.activity).load(mItems[0]).into(imageViewTarget);
+        Glide.with(this.activity).load(mItems[position]).into(imageViewTarget);
 //        imageView.setImageResource(mItems[0]);
         container.addView(itemView);
         return itemView;
@@ -54,3 +57,5 @@ public class ItemPagerAdapter extends android.support.v4.view.PagerAdapter {
         container.removeView((LinearLayout) object);
     }
 }
+
+

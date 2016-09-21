@@ -27,13 +27,15 @@
                 android:id="@+id/puppy"/>
             
             <TextView
+                android:id="@+id/HoverText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="20dp"
                 android:layout_centerHorizontal="true"
                 android:textColor="#E1F5FE"
-                android:text="Fido is feeling frisky!"
+                android:textSize="30sp"
+                android:text="Great work!\nFido is feeling frisky!"
                 />
 
 
@@ -87,15 +89,15 @@
             android:fitsSystemWindows="true"/>
     </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        app:layout_anchor="@id/bottom_sheet"
-        app:layout_anchorGravity="top|right|end"
-        android:src="@drawable/ic_action_go"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_behavior="@string/ScrollAwareFABBehavior"
-        android:clickable="true"/>
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--app:layout_anchor="@id/bottom_sheet"-->
+        <!--app:layout_anchorGravity="top|right|end"-->
+        <!--android:src="@drawable/ic_action_go"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--app:layout_behavior="@string/ScrollAwareFABBehavior"-->
+        <!--android:clickable="true"/>-->
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/merged_appbarlayout"
