@@ -125,14 +125,18 @@ Example Response
 
 ```
 {
+{
   "get_advanced_friend_data": [
     {
       "data": {
         "username": "emc67",
+        "pet_level": 1,
+        "pet_name": "smokey",
+        "percent_to_lvl": 0,
         "new_events": [
           null
         ],
-        "percent_to_lvl": 0,
+        "real_name": "Emerson",
         "last_week_data": {
           "current_pet_state": "happy",
           "future_pet_state": "happy",
@@ -142,17 +146,19 @@ Example Response
             "sleep": 0,
             "fitness": 0
           }
-        },
-        "pet_level": 1
+        }
       }
     },
     {
       "data": {
         "username": "ajs262",
+        "pet_level": 1,
+        "pet_name": "average_pup",
+        "percent_to_lvl": 0,
         "new_events": [
           null
         ],
-        "percent_to_lvl": 0,
+        "real_name": "AJ",
         "last_week_data": {
           "current_pet_state": "happy",
           "future_pet_state": "happy",
@@ -162,28 +168,7 @@ Example Response
             "sleep": 0,
             "fitness": 0
           }
-        },
-        "pet_level": 1
-      }
-    },
-    {
-      "data": {
-        "username": "test",
-        "new_events": [
-          null
-        ],
-        "percent_to_lvl": 0,
-        "last_week_data": {
-          "current_pet_state": "happy",
-          "future_pet_state": "happy",
-          "last_week_xp": {
-            "nutrition": 0,
-            "social": 0,
-            "sleep": 0,
-            "fitness": 0
-          }
-        },
-        "pet_level": 1
+        }
       }
     }
   ]
@@ -212,10 +197,13 @@ Example Response
 {
   "data": {
     "username": "rwr21",
+    "pet_level": 6,
+    "pet_name": "fluffy",
+    "percent_to_lvl": "86.00",
     "new_events": [
       null
     ],
-    "percent_to_lvl": "86.00",
+    "real_name": "Russell",
     "last_week_data": {
       "current_pet_state": "fit",
       "future_pet_state": "fit",
@@ -225,8 +213,7 @@ Example Response
         "sleep": 0,
         "fitness": 2727
       }
-    },
-    "pet_level": 6
+    }
   }
 }
 ```
