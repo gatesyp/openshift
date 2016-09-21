@@ -121,10 +121,10 @@ class SQLConnection:
         return dog
 
 
-    def check_or_add(self,user_name,pet_name,password): # tries to create an account, if one does not exist it creates it. 
+    def check_or_add(self,user_name,real_name,pet_name,password): # tries to create an account, if one does not exist it creates it. 
         try:
             password=self.hash_password(password)
-            self.query("INSERT INTO users VALUES (NULL,%s,%s,NULL,NULL,NULL,5000,NULL,NULL,CURRENT_TIMESTAMP,%s);" ,(user_name,pet_name,password))
+            self.query("INSERT INTO users VALUES (NULL,%s,%s,%s,NULL,NULL,NULL,5000,NULL,NULL,CURRENT_TIMESTAMP,%s);" ,(user_name,real_name,pet_name,password))
             return "Thank you for making an account!"
             #return "1"
         except mdb.IntegrityError, e:
@@ -136,6 +136,8 @@ class SQLConnection:
 
     def find_id_of_user(self, username):
         return self.query("SELECT id FROM `users` WHERE `user_name` LIKE %s",[username])[0]['id']# users id from id table as string
+    def find_real_name(self,username):
+        return self.query("SELECT real_name FROM `users` WHERE `user_name` LIKE %s",[username])[0]['real_name']
         
     def find_pet_of_user(self, username):
         return self.query("SELECT pet_name FROM `users` WHERE `user_name` LIKE %s",[username])[0]['pet_name'] #pet string id from users table
@@ -146,7 +148,7 @@ class SQLConnection:
     def change_xp(self,username,xp_change):#call this function to change user xp
         xp=self.query("SELECT xp FROM `users` WHERE `user_name` = %s",[username])
         xp= xp[0]
-        xp=xp['xp']+xp_change
+        xp=xp['xp']+int(xp_change)
         self.query("UPDATE `users` SET `xp` = %s WHERE `user_name`=%s",[xp,username])
 
    
@@ -246,8 +248,10 @@ class SQLConnection:
         pet_status_etc=(self.get_last_week_xp(username))
         percent=self.get_percent(username,lvl)
         new_events=self.get_events(username)
+        pet_name=self.find_pet_of_user(username)
+        real_name=self.find_real_name(username)
        # pet_state=
-        data = { "data": {"username":username,"new_events":new_events,'pet_level': lvl, 'percent_to_lvl': percent, "last_week_data" :pet_status_etc} }
+        data = { "data": {"username":username,"real_name":real_name, "pet_name":pet_name, "new_events":new_events,'pet_level': lvl, 'percent_to_lvl': percent, "last_week_data" :pet_status_etc} }
         
         #print json.dumps(data)
         return (data)
@@ -436,10 +440,11 @@ class SQLConnection:
                 average_xp_change=total_xp_change/num_of_friends
                 self.change_xp(people,average_xp_change)
                 # self.set_last_day_xp_to_xp(people)
+                current_xp=self.get_xp(people)
                 pet_name=self.find_pet_of_user(people)
                 message="As a result of your friends, " +pet_name+ " recieved "+ str(average_xp_change) + "xp!"
                 print average_xp_change
-                self.insert_events(people,"social","happy",average_xp_change,message ,1)
+                self.insert_events(people,"social","happy",average_xp_change,message ,1,current_xp)
         
                 
 ############## END METHODS INVOLING SOCIAL I ###############

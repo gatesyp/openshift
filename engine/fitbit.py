@@ -245,21 +245,24 @@ class fitbit():
     users=db.get_all_users()
     for username in users:
       if db.is_fitbit_setup(username):
-        db.change_xp(username,result)
+     
         pet_name=db.find_pet_of_user(username)
         result=self.get_user_data(username,type)
+
         print result
         result=result['summary']['totalTimeInBed']
+        db.change_xp(username,result)
         print result
         db=SQLConnection()
+        current_xp=db.get_xp(username)
         if result==0:
-          db.insert_events(username,"sleep","no_effect",0,"You did not sleep with your fitbit, so your score was uneffected","1")
+          db.insert_events(username,"sleep","home",0,"You did not sleep with your fitbit, so your score was uneffected","1",current_xp)
         elif result<=400:
-          db.insert_events(username,"sleep","sleepy",-250, pet_name +" is tired from the lack of sleep. -250 xp","1")
+          db.insert_events(username,"sleep","tired",-250, pet_name +" is tired from the lack of sleep. -250 xp","1",current_xp)
         elif result<=420:
-          db.insert_events(username,"sleep","sleepy",-125, pet_name +" is tired from the lack of sleep. -250 xp","1")
+          db.insert_events(username,"sleep","tired",-125, pet_name +" is tired from the lack of sleep. -250 xp","1",current_xp)
         else:
-          db.insert_events(username,"sleep","awake",250, pet_name +" feels great today! It must be from getting enough sleep. +250 xp","1")
+          db.insert_events(username,"sleep","home",250, pet_name +" feels great today! It must be from getting enough sleep. +250 xp","1",current_xp)
 
 
 #fitbit().add_events_fitness()
