@@ -193,6 +193,44 @@ Example Response
 
 ##Events
 
+
+POST **/events/get_data**
+
+Get all user and user graph data on page load
+
+Parameters 
+
+```
+ {  
+    "user_name": "rwr21"  
+ }  
+```
+
+Example Response
+
+```
+{
+  "data": {
+    "username": "rwr21",
+    "new_events": [
+      null
+    ],
+    "percent_to_lvl": "86.00",
+    "last_week_data": {
+      "current_pet_state": "fit",
+      "future_pet_state": "fit",
+      "last_week_xp": {
+        "nutrition": 0,
+        "social": 300,
+        "sleep": 0,
+        "fitness": 2727
+      }
+    },
+    "pet_level": 6
+  }
+}
+```
+
 POST **/events/plaid**   
 
 Check for new events with plaid ###Don't use this
