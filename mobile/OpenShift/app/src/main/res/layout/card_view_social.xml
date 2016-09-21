@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
     <android.support.v7.widget.CardView
         android:id="@+id/card_view_social"
         android:layout_width="match_parent"
@@ -16,6 +17,7 @@
         card_view:cardCornerRadius="2dp"
         card_view:contentPadding="10dp">
         <!--android:layout_gravity="center"-->
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,12 +34,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="22sp"
+                    android:text="Name:"
                     android:layout_marginStart="40dp"
                 />
 
@@ -46,6 +50,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="Level:"
+                    android:layout_marginStart="40dp"
+                    />
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="Pet State:"
                     android:layout_marginStart="40dp"
                     />
             </LinearLayout>
@@ -55,22 +70,29 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Donger"
-                    />
-
-                <TextView
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_marginStart="20dp"
+                    android:textSize="22sp"
+                    android:layout_marginStart="10dp"
+                    android:text="Donger"
+                    />
+                <!--android:layout_marginTop="1dp"-->
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_marginStart="10dp"
+                    android:text="Donger2"
+                    />
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_marginStart="10dp"
                     android:text="Donger2"
                     />
             </LinearLayout>

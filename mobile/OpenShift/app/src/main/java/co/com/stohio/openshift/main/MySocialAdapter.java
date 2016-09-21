@@ -26,6 +26,7 @@ public class MySocialAdapter extends RecyclerView
             implements View
             .OnClickListener {
         TextView label;
+        TextView username;
         TextView dateTime;
         ImageView image;
         TextView petState;
@@ -34,11 +35,10 @@ public class MySocialAdapter extends RecyclerView
 
         public DataObjectHolder(View itemView) {
             super(itemView);
-            label = (TextView) itemView.findViewById(R.id.textView);
-            dateTime = (TextView) itemView.findViewById(R.id.textView2);
+            username = (TextView) itemView.findViewById(R.id.textView4);
             image = (ImageView) itemView.findViewById(R.id.imageView1);
-            petState = (TextView) itemView.findViewById(R.id.textView3);
-            petLevel = (TextView) itemView.findViewById(R.id.textView4);
+            petLevel = (TextView) itemView.findViewById(R.id.textView5);
+            petState = (TextView) itemView.findViewById(R.id.textView6);
 
 //            Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
@@ -70,11 +70,10 @@ public class MySocialAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-        holder.label.setText(mDataset.get(position).getmText1());
-        holder.dateTime.setText(mDataset.get(position).getmText2());
+        holder.username.setText(mDataset.get(position).getmText4());
+        holder.petLevel.setText(mDataset.get(position).getmText5());
+        holder.petState.setText(mDataset.get(position).getmText6());
         holder.image.setImageResource(mDataset.get(position).getmImgId());
-        holder.petState.setText(mDataset.get(position).getmText3());
-        holder.petLevel.setText(mDataset.get(position).getmText4());
 
     }
 

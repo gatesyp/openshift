@@ -44,7 +44,8 @@ public class SocialFragment extends Fragment {
         rv .setLayoutManager(llm);
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        String url = "http://f6cd1422.ngrok.io/friends/find_advanced";
+//        String url = "http://f6cd1422.ngrok.io/friends/find_advanced";
+        String url = "http://myapppython27-openshift1.0ec9.hackathon.openshiftapps.com/friends/find_advanced";
         String bogos = "sksddfajddfsadjdkdfdsasdfasdffskkjlsadflkjdsalk";
 
         JSONObject jo = new JSONObject();
@@ -103,7 +104,7 @@ public class SocialFragment extends Fragment {
                         results.clear();
                         for (int index = 0; index < l; index++) {
                             int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + usernames.get(index), null, null);
-                            DataObjectSocial obj = new DataObjectSocial(usernames.get(index), pet_states.get(index),  id, pet_levels.get(index), "petState");
+                            DataObjectSocial obj = new DataObjectSocial(usernames.get(index), pet_levels.get(index), pet_states.get(index), id );
                             results.add(index, obj);
                         }
                         adapter = new MySocialAdapter(results);
@@ -116,7 +117,7 @@ public class SocialFragment extends Fragment {
                         Log.d("MyActivity", "That didnt work! ");
                         for (int index = 0; index < 2; index++) {
                             int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + "emc67", null, null);
-                            DataObjectSocial obj = new DataObjectSocial("Primary", "Secondary ",  id, "PetLEvel", "petState");
+                            DataObjectSocial obj = new DataObjectSocial("Name", "Level",  "State", id);
 
                             results.add(index, obj);
                         }

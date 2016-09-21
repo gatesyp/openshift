@@ -44,7 +44,8 @@ public class EventsFragment extends Fragment {
         rv .setLayoutManager(llm);
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        String url = "http://f6cd1422.ngrok.io/events/get_last_few";
+//        String url = "http://f6cd1422.ngrok.io/events/get_last_few";
+        String url = "http://myapppython27-openshift1.0ec9.hackathon.openshiftapps.com/events/get_last_few";
         String bogos = "sksddfajddfsadfdsasdfasdffskkjlsadflkjdsalk";
 
         JSONObject jo = new JSONObject();
@@ -90,7 +91,7 @@ public class EventsFragment extends Fragment {
                         for (int index = 0; index < 2; index++) {
                             int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
 //                            DataObject obj = new DataObject(user_names.get(index), current_xp.get(index), id);
-                            DataObjectEvents obj = new DataObjectEvents(user_names.get(index), xp_change.get(index),  id, "Pet level", "pet state");
+                            DataObjectEvents obj = new DataObjectEvents(categorys.get(index), xp_change.get(index),  current_xp.get(index), id);
 
                             results.add(index, obj);
                         }

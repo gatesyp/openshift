@@ -24,20 +24,18 @@ public class MyEventsAdapter extends RecyclerView
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
-        TextView label;
-        TextView dateTime;
-        TextView petState;
-        TextView petLevel;
+        TextView category;
+        TextView exp_change;
+        TextView exp_after;
         ImageView image;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
-            label = (TextView) itemView.findViewById(R.id.textView);
-            dateTime = (TextView) itemView.findViewById(R.id.textView2);
+            category = (TextView) itemView.findViewById(R.id.textView4);
+            exp_change = (TextView) itemView.findViewById(R.id.textView5);
+            exp_after = (TextView) itemView.findViewById(R.id.textView6);
             image = (ImageView) itemView.findViewById(R.id.imageView1);
-            petState = (TextView) itemView.findViewById(R.id.textView3);
-            petLevel = (TextView) itemView.findViewById(R.id.textView4);
-//            Log.i(LOG_TAG, "Adding Listener");
+
             itemView.setOnClickListener(this);
         }
 
@@ -67,10 +65,9 @@ public class MyEventsAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-        holder.label.setText(mDataset.get(position).getmText1());
-        holder.dateTime.setText(mDataset.get(position).getmText2());
-        holder.petState.setText(mDataset.get(position).getmText3());
-        holder.petLevel.setText(mDataset.get(position).getmText4());
+        holder.category.setText(mDataset.get(position).getmText4());
+        holder.exp_change.setText(mDataset.get(position).getmText5());
+        holder.exp_after.setText(mDataset.get(position).getmText6());
         holder.image.setImageResource(mDataset.get(position).getmImgId());
     }
 

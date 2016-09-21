@@ -54,7 +54,7 @@ import co.com.stohio.openshift.lib.MergedAppBarLayoutBehavior;
  * Created by emerson on 9/16/16.
  */
 public class HomeFragment extends Fragment {
-    ArrayList results = new ArrayList<DataObject>();
+//    ArrayList results = new ArrayList<DataObject>();
     int[] mDrawables = {
             R.drawable.cheese_3,
             R.drawable.cheese_3,
@@ -125,13 +125,13 @@ public class HomeFragment extends Fragment {
                         Log.d("DONGERDONGERDONGERDONGE", Integer.toString(l));
                         Log.d("DONGERDONGERDONGERDONGE", xp_change.get(0));
 
-                        results.clear();
+//                        results.clear();
                         for (int index = 0; index < 2; index++) {
                             int id = getResources().getIdentifier("co.com.stohio.openshift:drawable/" + user_names.get(index), null, null);
 //                            DataObject obj = new DataObject(user_names.get(index), current_xp.get(index), id);
-                            DataObject obj = new DataObject("Primary", "Secondary ",  id, "Pet level", "pet state");
+//                            DataObject obj = new DataObject("Primary", "Secondary ",  id, "Pet level", "pet state");
 
-                            results.add(index, obj);
+//                            results.add(index, obj);
                         }
                     }
                 },
@@ -145,7 +145,8 @@ public class HomeFragment extends Fragment {
         queue.add(jsObjRequest);
         ImageView imageView = (ImageView) v.findViewById(R.id.puppy);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
-        Glide.with(this).load(R.raw.happy_b1).into(imageViewTarget);
+        Glide.with(this).load(R.raw.happy).into(imageViewTarget);
+
 
         /**
          * If we want to listen for states callback
