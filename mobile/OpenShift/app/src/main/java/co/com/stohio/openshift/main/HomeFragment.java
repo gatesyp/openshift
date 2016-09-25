@@ -81,9 +81,9 @@ public class HomeFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 //        String url = "http://f6cd1422.ngrok.io/events/get_last_few";
-//        String url = "http://e925d3c8.ngrok.io/events/get_data";
+        String url = "http://e925d3c8.ngrok.io/events/get_data";
 
-        String url = "http://deploy-openshift1.0ec9.hackathon.openshiftapps.com/events/get_data";
+//        String url = "http://deploy-openshift1.0ec9.hackathon.openshiftapps.com/events/get_data";
         String bogos = "sksddfajddfsadfdsasdfasdffskkjlsadflkjdsalk";
 
         JSONObject jo = new JSONObject();

@@ -44,9 +44,9 @@ public class EventsFragment extends Fragment {
         rv .setLayoutManager(llm);
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-//        String url = "http://e925d3c8.ngrok.io/events/get_last_few";
+        String url = "http://e925d3c8.ngrok.io/events/get_last_few";
 
-        String url = "http://deploy-openshift1.0ec9.hackathon.openshiftapps.com/events/get_last_few";
+//        String url = "http://deploy-openshift1.0ec9.hackathon.openshiftapps.com/events/get_last_few";
 //        String url = "http://myapppython27-openshift1.0ec9.hackathon.openshiftapps.com/events/get_last_few";
         String bogos = "sksddfajddfsadfdsasdfasdffskkjjkjkjlsadflkjdsalk";
 
